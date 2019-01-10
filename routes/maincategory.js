@@ -4,11 +4,13 @@ module.exports = function(router) {
 
 
     router.route('/')
-    .post((req, res) =>
+    .post((req, res) => {
+        console.log("HELLO!")
+        console.log(req.body)
         controller
-        .create(req.body.payload.name)
+        .create(req.body.payload.categoryName)
         .then(cat => res.json(cat.toJSON()))
-        .catch(err => res.status(400).json({ err })))
+        .catch(err => res.status(400).json({ err }))})
 
     .get((_, res) =>
         controller
@@ -29,7 +31,7 @@ module.exports = function(router) {
         .delete(req.params.id)
         .then(cat => res.json(cat.toJSON()))
         .catch(err => res.status(400).json({ err })))
-        
+
 
     return router
 }

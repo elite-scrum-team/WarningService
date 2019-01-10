@@ -6,7 +6,7 @@ module.exports = function(router) {
     router.route('/')
     .post((req, res) =>
         controller
-        .create(...req.body.payload)
+        .create({ ...req.body.payload })
         .then(con => res.json(con.toJSON()))
         .catch(err => res.status(400).json({ err })))
 

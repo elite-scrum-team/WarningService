@@ -6,7 +6,7 @@ module.exports = function(router) {
     router.route('/')
     .post((req, res) =>
         controller
-        .create(...req.body.payload)
+        .create({ ...req.body.payload })
         .then(cat => res.json(cat.toJSON()))
         .catch(err => res.status(400).json({ err })))
 
@@ -30,6 +30,6 @@ module.exports = function(router) {
         .then(cat => res.json(cat.toJSON()))
         .catch(err => res.status(400).json({ err })))
 
-    
+
     return router
 }

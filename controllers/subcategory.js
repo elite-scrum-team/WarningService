@@ -6,12 +6,12 @@ module.exports = {
 
     create: async (categoryName, MainCategoryId) =>
         SubCategory
-        .create({ name, parentID }),
+        .create({ categoryName, MainCategoryId }),
 
     read: async (id) =>
         SubCategory
         .findById(id),
-    
+
     readAll: async () =>
         SubCategory
         .findAll(),

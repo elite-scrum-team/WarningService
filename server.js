@@ -7,7 +7,6 @@ require('dotenv').config()
 console.log("Initing DB")
 
 const sequelize = require('./models').sequelize
-sequelize.sync({ force: true })
 
 console.log("Init successful")
 
