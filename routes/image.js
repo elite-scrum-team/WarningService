@@ -1,14 +1,16 @@
 const controller = require('../controllers/image')
 
+const upload = require('../src/middleware/googleCloudStorage')
+
 module.exports = function(router) {
 
 
     router.route('/')
-    .post((req, res) =>
+    .post(upload.single('warningImage'), (req, res) =>
         controller
-        .create(...req.body.payload)
+        .create(...req.file.location)
         .then(img => res.json(img.toJSON()))
-        .catch(err => res.status(400).json({ msg: err })))
+        .catch(err => res.status(400).json({ err })))
 
     .get((_, res) =>
         controller

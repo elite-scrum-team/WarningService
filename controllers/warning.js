@@ -4,7 +4,7 @@ const { Warning } = require('../models')
 
 module.exports = {
 
-    create: async (image, description, UserId, LocationId, SubCategoryId) =>
+    create: async (description, UserId, LocationId, SubCategoryId) =>
         Warning
         .create({ ...args }),
 

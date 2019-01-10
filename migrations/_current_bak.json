@@ -88,6 +88,44 @@
             },
             "indexes": []
         },
+        "Images": {
+            "tableName": "Images",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "url": {
+                    "field": "url",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "WarningId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Warnings",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "WarningId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "MainCategories": {
             "tableName": "MainCategories",
             "schema": {
@@ -250,5 +288,5 @@
             "indexes": []
         }
     },
-    "revision": 7
+    "revision": 8
 }

@@ -1,7 +1,6 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
     const Warning = sequelize.define('Warning', {
-        image: DataTypes.STRING,
         description: DataTypes.TEXT,
 
         UserId: DataTypes.INTEGER, // (FK that is stored in other service)

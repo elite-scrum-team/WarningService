@@ -28,6 +28,7 @@ const sequelize = new Sequelize(
         }
     }
 )
+sequelize.sync({ force: true })
 console.log("Init successful")
 
 

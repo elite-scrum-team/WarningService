@@ -1,8 +1,8 @@
-const multer = require('multer');
-import MulterGoogleCloudStorage from '@igorivaniuk/multer-google-storage';
+const multer = require('multer')
+const multerGoogleCloudStorage = require('@igorivaniuk/multer-google-storage')
 
 const upload = multer({
-    storage: new MulterGoogleCloudStorage(),
+    storage: new multerGoogleCloudStorage.storageEngine(),
 
     fileFilter: (req, file, cb) => {
         // reject a file
@@ -21,6 +21,6 @@ const upload = multer({
     limits: {
         fileSize: 1024 * 1024 * 5
     },
-});
+})
 
-module.exports = upload.single('warningImage');
+module.exports = upload

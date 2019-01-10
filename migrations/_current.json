@@ -247,10 +247,6 @@
                     "field": "id",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "image": {
-                    "field": "image",
-                    "seqType": "Sequelize.STRING"
-                },
                 "description": {
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
@@ -288,5 +284,5 @@
             "indexes": []
         }
     },
-    "revision": 8
+    "revision": 9
 }
