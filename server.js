@@ -1,34 +1,13 @@
-
-require('dotenv').config()
 const express = require('express')
-const Sequelize = require('sequelize')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
 
-const dbName = process.env.DB_NAME || ''
-const dbUser = process.env.DB_USERNAME || ''
-const dbPw = process.env.DB_PASSWORD || ''
-const dbHost = process.env.DB_HOST || ''
 
+console.log("Initing DB")
 
-console.log("Initing DB");
-
-const sequelize = new Sequelize(
-    dbName,
-    dbUser,
-    dbPw,
-    {
-        host: dbHost,
-        dialect: 'mysql',
-        pool: {
-            max: 2,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        }
-    }
-)
+const sequelize = require('./models').sequelize
 sequelize.sync({ force: true })
+
 console.log("Init successful")
 
 
