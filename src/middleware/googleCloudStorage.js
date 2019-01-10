@@ -1,6 +1,10 @@
 const multer = require('multer')
 const multerGoogleCloudStorage = require('@igorivaniuk/multer-google-storage')
 
+
+console.log(`Env variables \t\t\t\t\t\t\t${process.env}`)
+
+
 const upload = multer({
     storage: new multerGoogleCloudStorage.storageEngine(),
 
