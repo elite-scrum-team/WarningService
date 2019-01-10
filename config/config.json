@@ -1,23 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "platon",
-    "database": "test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "root",
-    "password": "platon",
-    "database": "test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password": "platon",
-    "database": "test",
-    "host": "127.0.0.1",
+    "username": "WarningService",
+    "password": "WCJEzJed4bUhCp9",
+    "database": "WarningService",
+    "host": "35.228.44.201",
     "dialect": "mysql"
   }
 }
