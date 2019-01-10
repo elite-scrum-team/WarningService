@@ -6,19 +6,21 @@ module.exports = {
 
     create: async (title, description, UserId, WarningId) =>
         Status
-        .create({ ...args }),
+        .create({ ...arguments })
+        .then(res => res.dataValues),
 
     read: async (id) =>
         Status
-        .findById(id),
+        .findById(id, { raw: true }),
 
     readAll: async () =>
         Status
-        .findAll(),
+        .findAll({ raw: true }),
 
     delete: async (id) =>
         Status
         .findById(id)
         .then(stat => stat.destroy())
+        .then(deleted => deleted.dataValues)
 
 }

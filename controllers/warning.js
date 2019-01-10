@@ -6,19 +6,21 @@ module.exports = {
 
     create: async (description, UserId, LocationId, SubCategoryId) =>
         Warning
-        .create({ ...args }),
+        .create({ ...arguments })
+        .then(res => res.dataValues),
 
     read: async (id) =>
         Warning
-        .findById(id),
+        .findById(id, { raw: true }),
 
     readAll: async () =>
         Warning
-        .findAll(),
+        .findAll({ raw: true }),
 
     delete: async (id) =>
         Warning
         .findById(id)
         .then(war => war.destroy())
+        .then(deleted => deleted.dataValues)
 
 }

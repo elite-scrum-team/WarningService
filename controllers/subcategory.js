@@ -6,19 +6,21 @@ module.exports = {
 
     create: async (categoryName, MainCategoryId) =>
         SubCategory
-        .create({ categoryName, MainCategoryId }),
+        .create({ ...arguments })
+        .then(res => res.dataValues),
 
     read: async (id) =>
         SubCategory
-        .findById(id),
+        .findById(id, { raw: true }),
 
     readAll: async () =>
         SubCategory
-        .findAll(),
+        .findAll({ raw: true }),
 
     delete: async (id) =>
         SubCategory
         .findById(id)
         .then(cat => cat.destroy())
+        .then(deleted => deleted.dataValues)
 
 }

@@ -6,19 +6,21 @@ module.exports = {
 
     create: async (url, WarningId) =>
         Image
-        .create({ url, WarningId }),
+        .create({ ...arguments })
+        .then(res => res.dataValues),
 
     read: async (id) =>
         Image
-        .findById(id),
+        .findById(id, { raw: true }),
 
     readAll: async () =>
         Image
-        .findAll(),
+        .findAll({ raw: true }),
 
     delete: async (id) =>
         Image
         .findById(id)
         .then(img => img.destroy())
+        .then(deleted => deleted.dataValues)
 
 }

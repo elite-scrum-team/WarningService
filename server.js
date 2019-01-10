@@ -7,9 +7,14 @@ require('dotenv').config()
 console.log("Initing DB")
 
 const sequelize = require('./models').sequelize
-
+sequelize.sync({ force: true })
 console.log("Init successful")
 
+
+const { MainCategory } = require('./models')
+// MainCategory.findAll({ raw: true }).then(res => console.log(res))
+// MainCategory.findById(1, { raw: true }).then(console.log)
+// MainCategory.findById(4).then(res => res.destroy()).then(console.log)
 
 
 const app = express()

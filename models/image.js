@@ -1,10 +1,13 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
     const Image = sequelize.define('Image', {
-        url: DataTypes.STRING
+        url: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     }, {
         hooks: {
-            beforeCreate: (image, options) => 
+            beforeCreate: (image, _) => 
                 Image.count({
                     where: {
                         WarningId: image.dataValues.WarningId

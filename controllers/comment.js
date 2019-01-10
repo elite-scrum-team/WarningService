@@ -6,19 +6,21 @@ module.exports = {
 
     create: async (comment, image, UserId, WarningId) =>
         Comment
-        .create({ ...args }),
+        .create({ ...arguments })
+        .then(res => res.dataValues),
 
     read: async (id) =>
         Comment
-        .findById(id),
+        .findById(id, { raw: true }),
 
     readAll: async () =>
         Comment
-        .findAll(),
+        .findAll({ raw: true }),
 
     delete: async (id) =>
         Comment
         .findById(id)
         .then(com => com.destroy())
+        .then(deleted => deleted.dataValues)
 
 }

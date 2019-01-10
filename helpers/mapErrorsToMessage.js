@@ -1,0 +1,1 @@
+module.exports = (err) => err.errors.map(it => it.message)

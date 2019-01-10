@@ -1,4 +1,5 @@
 const controller = require('../controllers/subcategory')
+const errMap = require('../helpers/mapErrorsToMessage')
 
 module.exports = function(router) {
 
@@ -6,15 +7,15 @@ module.exports = function(router) {
     router.route('/')
     .post((req, res) =>
         controller
-        .create({ ...req.body.payload })
+        .create(...req.body.payload)
         .then(cat => res.json(cat.toJSON()))
-        .catch(err => res.status(400).json({ err })))
+        .catch(err => res.status(400).json(errMap(err))))
 
     .get((_, res) =>
         controller
         .readAll()
         .then(cats => res.json(cats.toJSON()))
-        .catch(err => res.status(400).json({ err })))
+        .catch(err => res.status(400).json(errMap(err))))
 
 
     router.route('/:id')
@@ -22,13 +23,13 @@ module.exports = function(router) {
         controller
         .readAll(req.params.id)
         .then(cat => res.json(cat.toJSON()))
-        .catch(err => res.status(400).json({ err })))
+        .catch(err => res.status(400).json(errMap(err))))
 
     .delete((req, res) =>
         controller
         .delete(req.params.id)
         .then(cat => res.json(cat.toJSON()))
-        .catch(err => res.status(400).json({ err })))
+        .catch(err => res.status(400).json(errMap(err))))
 
 
     return router

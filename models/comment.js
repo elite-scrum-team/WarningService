@@ -1,10 +1,16 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
     const Comment = sequelize.define('Comment', {
-        comment: DataTypes.TEXT,
+        comment: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
         image: DataTypes.STRING,
 
-        UserId: DataTypes.INTEGER
+        UserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
     }, {})
     Comment.associate = function(models) {
         Comment.belongsTo(models.Warning)
