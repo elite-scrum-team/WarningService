@@ -18,8 +18,8 @@
                     "field": "image",
                     "seqType": "Sequelize.STRING"
                 },
-                "userId": {
-                    "field": "userId",
+                "UserId": {
+                    "field": "UserId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -133,8 +133,8 @@
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
                 },
-                "userId": {
-                    "field": "userId",
+                "UserId": {
+                    "field": "UserId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -217,12 +217,12 @@
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
                 },
-                "userId": {
-                    "field": "userId",
+                "UserId": {
+                    "field": "UserId",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "locationId": {
-                    "field": "locationId",
+                "LocationId": {
+                    "field": "LocationId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -250,5 +250,5 @@
             "indexes": []
         }
     },
-    "revision": 6
+    "revision": 7
 }

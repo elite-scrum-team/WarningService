@@ -1,4 +1,4 @@
-const controller = require('../controllers/maincategory')
+const controller = require('../controllers/subcategory')
 
 module.exports = function(router) {
 
@@ -6,7 +6,7 @@ module.exports = function(router) {
     router.route('/')
     .post((req, res) =>
         controller
-        .create(req.body.payload.name)
+        .create(...req.body.payload)
         .then(cat => res.json(cat.toJSON()))
         .catch(err => res.status(400).json({ err })))
 
@@ -20,7 +20,7 @@ module.exports = function(router) {
     router.route('/:id')
     .get((req, res) =>
         controller
-        .read(req.params.id)
+        .readAll(req.params.id)
         .then(cat => res.json(cat.toJSON()))
         .catch(err => res.status(400).json({ err })))
 
@@ -29,7 +29,7 @@ module.exports = function(router) {
         .delete(req.params.id)
         .then(cat => res.json(cat.toJSON()))
         .catch(err => res.status(400).json({ err })))
-        
 
+    
     return router
 }

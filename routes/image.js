@@ -1,4 +1,4 @@
-const controller = require('../controllers/maincategory')
+const controller = require('../controllers/image')
 
 module.exports = function(router) {
 
@@ -6,14 +6,14 @@ module.exports = function(router) {
     router.route('/')
     .post((req, res) =>
         controller
-        .create(req.body.payload.name)
-        .then(cat => res.json(cat.toJSON()))
-        .catch(err => res.status(400).json({ err })))
+        .create(...req.body.payload)
+        .then(img => res.json(img.toJSON()))
+        .catch(err => res.status(400).json({ msg: err })))
 
     .get((_, res) =>
         controller
         .readAll()
-        .then(cats => res.json(cats.toJSON()))
+        .then(imgs => res.json(imgs.toJSON()))
         .catch(err => res.status(400).json({ err })))
 
 
@@ -21,15 +21,15 @@ module.exports = function(router) {
     .get((req, res) =>
         controller
         .read(req.params.id)
-        .then(cat => res.json(cat.toJSON()))
+        .then(img => res.json(img.toJSON()))
         .catch(err => res.status(400).json({ err })))
-
+    
     .delete((req, res) =>
         controller
         .delete(req.params.id)
-        .then(cat => res.json(cat.toJSON()))
+        .then(img => img.json(img.toJSON()))
         .catch(err => res.status(400).json({ err })))
-        
 
+        
     return router
 }
