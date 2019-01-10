@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         title: DataTypes.STRING,
         description: DataTypes.TEXT,
 
-        userID: DataTypes.INTEGER
+        UserId: DataTypes.INTEGER
     }, {})
     Status.associate = function(models) {
         Status.belongsTo(models.Warning)

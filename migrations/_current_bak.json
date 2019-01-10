@@ -18,8 +18,50 @@
                     "field": "image",
                     "seqType": "Sequelize.STRING"
                 },
-                "userID": {
-                    "field": "userID",
+                "userId": {
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "WarningId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Warnings",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "WarningId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Contracts": {
+            "tableName": "Contracts",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "GroupId": {
+                    "field": "GroupId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -91,8 +133,8 @@
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
                 },
-                "userID": {
-                    "field": "userID",
+                "userId": {
+                    "field": "userId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -175,12 +217,12 @@
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
                 },
-                "userID": {
-                    "field": "userID",
+                "userId": {
+                    "field": "userId",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "locationID": {
-                    "field": "locationID",
+                "locationId": {
+                    "field": "locationId",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -208,5 +250,5 @@
             "indexes": []
         }
     },
-    "revision": 4
+    "revision": 6
 }
