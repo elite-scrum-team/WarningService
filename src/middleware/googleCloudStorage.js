@@ -1,5 +1,5 @@
 const multer = require('multer');
-import MulterGoogleCloudStorage from '@igorivaniuk/multer-google-storage';
+const MulterGoogleCloudStorage = require('@igorivaniuk/multer-google-storage');
 
 const upload = multer({
     storage: new MulterGoogleCloudStorage(),
