@@ -11,11 +11,12 @@ const dbPw = process.env.DB_PASSWORD || ''
 const dbHost = process.env.DB_HOST || ''
 
 
-console.log("Initing DB")
+console.log("Initing DB");
+
 const sequelize = new Sequelize(
     dbName,
     dbUser,
-    dbPw, 
+    dbPw,
     {
         host: dbHost,
         dialect: 'mysql',

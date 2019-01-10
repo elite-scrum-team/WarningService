@@ -1,24 +1,30 @@
-const multer = require('multer')
+const multer = require('multer');
+import MulterGoogleCloudStorage from '@igorivaniuk/multer-google-storage';
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        cb(null, './uploads/');
+const storage = multer({
+    storage: new MulterGoogleCloudStorage(),
+
+    fileFilter: function fileFilter(req, file, cb) {
+        // reject a file
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+            cb(null, true);
+        } else {
+            cb(null, false);
+        }
     },
-    filename: (req, file, cb) =>{
-        cb(null, Date.now() + file.originalname);
-    }
+
+    filename: function fileName(req, file, cb){
+        let datenow = Date.now().toString();
+        cb(null, datenow + file.toString())
+    },
+
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
 });
 
-const fileFilter = (req, file, cb)=>{
-    if(file.mimeType ==='image/jpeg' || ile.mimeType ==='image/png'){
-        cb(null, true);
-    }else{
-        cb(null,false);
-    }
-};
+const upload = multer({
+    storage: storage,
+});
 
-const upload = multer({storage: storage, limits: {
-        fileSize: 1024*1024*5
-    }});
-
-module.exports = upload.single('articleImage');
+module.exports = upload.single('WarningImage');
