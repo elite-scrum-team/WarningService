@@ -1,0 +1,5 @@
+{
+  "GCLOUD_PROJECT": "scrum-227910",
+  "DATA_BACKEND": "datastore",
+  "CLOUD_BUCKET": "hverdagshelt_image_bucket"
+}
