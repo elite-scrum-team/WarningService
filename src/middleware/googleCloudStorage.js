@@ -1,10 +1,10 @@
 const multer = require('multer');
 import MulterGoogleCloudStorage from '@igorivaniuk/multer-google-storage';
 
-const storage = multer({
+const upload = multer({
     storage: new MulterGoogleCloudStorage(),
 
-    fileFilter: function fileFilter(req, file, cb) {
+    fileFilter: (req, file, cb) => {
         // reject a file
         if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
             cb(null, true);
@@ -13,9 +13,9 @@ const storage = multer({
         }
     },
 
-    filename: function fileName(req, file, cb){
+    filename: (req, file, cb) => {
         let datenow = Date.now().toString();
-        cb(null, datenow + file.toString())
+        cb(null, datenow + file.getOriginalFilename())
     },
 
     limits: {
@@ -23,8 +23,4 @@ const storage = multer({
     },
 });
 
-const upload = multer({
-    storage: storage,
-});
-
-module.exports = upload.single('WarningImage');
+module.exports = upload.single('warningImage');
