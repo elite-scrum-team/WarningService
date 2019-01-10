@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
         image: DataTypes.STRING,
         description: DataTypes.TEXT,
 
-        userID: DataTypes.INTEGER, // (FK that is stored in other service)
-        locationID: DataTypes.INTEGER // (FK that is stored in other service)
+        UserId: DataTypes.INTEGER, // (FK that is stored in other service)
+        LocationId: DataTypes.INTEGER // (FK that is stored in other service)
     }, {})
     Warning.associate = function(models) {
         Warning.belongsTo(models.SubCategory)
