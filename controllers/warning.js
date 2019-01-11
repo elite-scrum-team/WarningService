@@ -12,9 +12,7 @@ module.exports = {
     read: async (id) =>
         Warning
         .findByPk(id, {
-            include: [
-                { all: true }
-            ]
+            include: [{ all: true }]
         })
         .then(res => res.toJSON()),
 
@@ -24,7 +22,7 @@ module.exports = {
 
     delete: async (id) =>
         Warning
-        .findById(id)
+        .findByPk(id)
         .then(war => war.destroy())
         .then(deleted => deleted.dataValues)
 

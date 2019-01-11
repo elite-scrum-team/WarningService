@@ -1,7 +1,10 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
     const Warning = sequelize.define('Warning', {
-        description: DataTypes.TEXT,
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
 
         UserId: {
             type: DataTypes.INTEGER,
@@ -13,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         } // (FK that is stored in other service)
     }, {})
     Warning.associate = function(models) {
-        Warning.belongsTo(models.SubCategory)
+        Warning.belongsTo(models.SubCategory, {
+            allowNull: false
+        })
         Warning.hasMany(models.Comment)
         Warning.hasMany(models.Status)
         Warning.hasMany(models.Contract)
