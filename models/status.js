@@ -1,8 +1,11 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
     const Status = sequelize.define('Status', {
-        title: DataTypes.STRING,
         description: DataTypes.TEXT,
+        type: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
+        },
 
         UserId: {
             type: DataTypes.INTEGER,

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start": "node server.js",
+    "start": "sequelize db:migrate && node server.js",
     "start:dev": "nodemon server.js",
     "make-migrations": "makemigration --name",
     "migrate": "sequelize db:migrate"

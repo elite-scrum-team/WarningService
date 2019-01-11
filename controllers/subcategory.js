@@ -4,9 +4,9 @@ const { SubCategory } = require('../models')
 
 module.exports = {
 
-    create: async (categoryName, MainCategoryId) =>
+    create: async (data) =>
         SubCategory
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) =>

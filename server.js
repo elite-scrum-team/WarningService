@@ -7,7 +7,6 @@ require('dotenv').config()
 console.log("Initing DB")
 
 const sequelize = require('./models').sequelize
-sequelize.sync()
 console.log("Init successful")
 
 
@@ -28,6 +27,8 @@ app.get('/', async (req, res) => {
 
 const routes = require('./routes')
 app.use('/', routes)
+
+app.all('*', (_, res) => res.status(404).json(["Could not process request, check if json is valid"]))
 
 const port = process.env.port | 80
 

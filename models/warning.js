@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }, {})
     Warning.associate = function(models) {
         Warning.belongsTo(models.SubCategory)
+        Warning.hasMany(models.Comment)
+        Warning.hasMany(models.Status)
+        Warning.hasMany(models.Contract)
+        Warning.hasMany(models.Image)
     }
     return Warning
 }

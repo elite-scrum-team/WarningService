@@ -4,9 +4,9 @@ const { Comment } = require('../models')
 
 module.exports = {
 
-    create: async (comment, image, UserId, WarningId) =>
+    create: async (data) =>
         Comment
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) =>

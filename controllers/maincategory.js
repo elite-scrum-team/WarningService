@@ -4,9 +4,9 @@ const { MainCategory } = require('../models')
 
 module.exports = {
 
-    create: async (categoryName) => 
+    create: async (data) => 
         MainCategory
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) => 
@@ -15,7 +15,9 @@ module.exports = {
 
     readAll: async () =>
         MainCategory
-        .findAll({ raw: true }),
+        .findAll({
+            include: [{ all: true }]
+        }),
 
     delete: async (id) =>
         MainCategory

@@ -4,9 +4,9 @@ const { Status } = require('../models')
 
 module.exports = {
 
-    create: async (title, description, UserId, WarningId) =>
+    create: async (data) =>
         Status
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) =>

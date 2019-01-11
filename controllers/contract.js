@@ -4,9 +4,9 @@ const { Contract } = require('../models')
 
 module.exports = {
 
-    create: async (description, UserId) =>
+    create: async (data) =>
         Contract
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) =>

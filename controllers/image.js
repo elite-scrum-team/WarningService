@@ -4,9 +4,9 @@ const { Image } = require('../models')
 
 module.exports = {
 
-    create: async (url, WarningId) =>
+    create: async (data) =>
         Image
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) =>

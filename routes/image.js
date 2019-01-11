@@ -8,7 +8,7 @@ module.exports = function(router) {
     router.route('/')
     .post(upload.single('warningImage'), (req, res) =>
         controller
-        .create(...req.file.location)
+        .create(req.file.location)
         .then(img => res.json(img))
         .catch(err => res.status(400).json(errMap(err))))
 

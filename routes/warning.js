@@ -7,7 +7,7 @@ module.exports = function(router) {
     router.route('/')
     .post((req, res) =>
         controller
-        .create(...req.body.payload)
+        .create(req.body.payload)
         .then(warn => res.json(warn))
         .catch(err => res.status(400).json(errMap(err))))
 

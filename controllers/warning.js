@@ -4,14 +4,19 @@ const { Warning } = require('../models')
 
 module.exports = {
 
-    create: async (description, UserId, LocationId, SubCategoryId) =>
+    create: async (data) =>
         Warning
-        .create({ ...arguments })
+        .create(data)
         .then(res => res.dataValues),
 
     read: async (id) =>
         Warning
-        .findById(id, { raw: true }),
+        .findByPk(id, {
+            include: [
+                { all: true }
+            ]
+        })
+        .then(res => res.toJSON()),
 
     readAll: async () =>
         Warning
@@ -23,4 +28,5 @@ module.exports = {
         .then(war => war.destroy())
         .then(deleted => deleted.dataValues)
 
+    // getAllInfo for a warning
 }

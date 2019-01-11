@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {})
   MainCategory.associate = function(models) {
-    // associations can be defined here
+    MainCategory.hasMany(models.SubCategory)
   };
   return MainCategory
 };
