@@ -39,14 +39,8 @@
     "sequelize-cli": "^5.4.0"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
+     "hooks": {
+        "pre-commit": "pretty-quick --staged"
+     }
   }
 }
