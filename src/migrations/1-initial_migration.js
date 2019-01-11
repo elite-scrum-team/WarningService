@@ -17,8 +17,8 @@ var Sequelize = require('sequelize');
 
 var info = {
     "revision": 1,
-    "name": "Initial setup",
-    "created": "2019-01-11T09:12:45.334Z",
+    "name": "initial migration",
+    "created": "2019-01-11T14:19:17.656Z",
     "comment": ""
 };
 
@@ -109,7 +109,8 @@ var migrationCommands = [{
                 },
                 "description": {
                     "type": Sequelize.TEXT,
-                    "field": "description"
+                    "field": "description",
+                    "allowNull": false
                 },
                 "UserId": {
                     "type": Sequelize.INTEGER,
@@ -305,7 +306,7 @@ var migrationCommands = [{
                 "type": {
                     "type": Sequelize.INTEGER,
                     "field": "type",
-                    "defaultValue": 1
+                    "defaultValue": 0
                 },
                 "UserId": {
                     "type": Sequelize.INTEGER,

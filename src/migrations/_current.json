@@ -175,7 +175,7 @@
                 },
                 "type": {
                     "defaultValue": {
-                        "value": 1
+                        "value": 0
                     },
                     "field": "type",
                     "seqType": "Sequelize.INTEGER"
@@ -259,6 +259,7 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "description": {
+                    "allowNull": false,
                     "field": "description",
                     "seqType": "Sequelize.TEXT"
                 },
