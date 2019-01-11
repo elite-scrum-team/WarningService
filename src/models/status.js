@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             description: DataTypes.TEXT,
             type: {
                 type: DataTypes.INTEGER,
-                defaultValue: 1,
+                defaultValue: 0,
             },
 
             UserId: {
