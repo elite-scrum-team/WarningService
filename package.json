@@ -39,8 +39,8 @@
     "sequelize-cli": "^5.4.0"
   },
   "husky": {
-     "hooks": {
-        "pre-commit": "pretty-quick --staged"
-     }
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
