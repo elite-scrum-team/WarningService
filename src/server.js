@@ -10,7 +10,6 @@ const collectDefaultMetrics = client.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
 
 const sequelize = require('./models').sequelize;
-sequelize.sync({ force: true })
 
 const app = express();
 
