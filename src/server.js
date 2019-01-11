@@ -16,7 +16,7 @@ const app = express()
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(require('./middleware/addMethod.js');
+app.use(require('./middleware/addMethod.js'))
 
 app.get('/metrics', async (req, res) => {
     await res.set('Content-Type', client.register.contentType)

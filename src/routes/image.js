@@ -1,6 +1,6 @@
 const controller = require('../controllers/image')
 const errMap = require('../helpers/mapErrorsToMessage')
-const upload = require('../src/middleware/googleCloudStorage')
+const upload = require('../middleware/googleCloudStorage')
 
 module.exports = function(router) {
 
