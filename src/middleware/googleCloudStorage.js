@@ -1,9 +1,7 @@
-const multer = require('multer')
-const multerGoogleCloudStorage = require('@igorivaniuk/multer-google-storage')
-
+const multer = require('multer');
+const multerGoogleCloudStorage = require('@igorivaniuk/multer-google-storage');
 
 //console.log(`Env variables \t\t\t\t\t\t\t${JSON.stringify(process.env)}`)
-
 
 const upload = multer({
     storage: new multerGoogleCloudStorage.storageEngine(),
@@ -19,13 +17,12 @@ const upload = multer({
 
     filename: (req, file, cb) => {
         let datenow = Date.now().toString();
-        cb(null, datenow + file.getOriginalFilename())
+        cb(null, datenow + file.getOriginalFilename());
     },
 
     limits: {
-        fileSize: 1024 * 1024 * 5
+        fileSize: 1024 * 1024 * 5,
     },
-})
+});
 
-module.exports = upload
-
+module.exports = upload;

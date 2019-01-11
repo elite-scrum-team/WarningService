@@ -16,348 +16,347 @@ var Sequelize = require('sequelize');
  **/
 
 var info = {
-    "revision": 1,
-    "name": "Initial setup",
-    "created": "2019-01-11T09:12:45.334Z",
-    "comment": ""
+    revision: 1,
+    name: 'Initial setup',
+    created: '2019-01-11T09:12:45.334Z',
+    comment: '',
 };
 
-var migrationCommands = [{
-        fn: "createTable",
+var migrationCommands = [
+    {
+        fn: 'createTable',
         params: [
-            "MainCategories",
+            'MainCategories',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "categoryName": {
-                    "type": Sequelize.STRING,
-                    "field": "categoryName",
-                    "allowNull": false
+                categoryName: {
+                    type: Sequelize.STRING,
+                    field: 'categoryName',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
+                },
             },
-            {}
-        ]
+            {},
+        ],
     },
     {
-        fn: "createTable",
+        fn: 'createTable',
         params: [
-            "SubCategories",
+            'SubCategories',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "categoryName": {
-                    "type": Sequelize.STRING,
-                    "field": "categoryName",
-                    "allowNull": false
+                categoryName: {
+                    type: Sequelize.STRING,
+                    field: 'categoryName',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
                 },
-                "MainCategoryId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "MainCategoryId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "MainCategories",
-                        "key": "id"
+                MainCategoryId: {
+                    type: Sequelize.INTEGER,
+                    field: 'MainCategoryId',
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL',
+                    references: {
+                        model: 'MainCategories',
+                        key: 'id',
                     },
-                    "allowNull": true
-                }
+                    allowNull: true,
+                },
             },
-            {}
-        ]
+            {},
+        ],
     },
     {
-        fn: "createTable",
+        fn: 'createTable',
         params: [
-            "Warnings",
+            'Warnings',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "description": {
-                    "type": Sequelize.TEXT,
-                    "field": "description"
+                description: {
+                    type: Sequelize.TEXT,
+                    field: 'description',
                 },
-                "UserId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "UserId",
-                    "allowNull": false
+                UserId: {
+                    type: Sequelize.INTEGER,
+                    field: 'UserId',
+                    allowNull: false,
                 },
-                "LocationId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "LocationId",
-                    "allowNull": false
+                LocationId: {
+                    type: Sequelize.INTEGER,
+                    field: 'LocationId',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
                 },
-                "SubCategoryId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "SubCategoryId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "SubCategories",
-                        "key": "id"
+                SubCategoryId: {
+                    type: Sequelize.INTEGER,
+                    field: 'SubCategoryId',
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL',
+                    references: {
+                        model: 'SubCategories',
+                        key: 'id',
                     },
-                    "allowNull": true
-                }
+                    allowNull: true,
+                },
             },
-            {}
-        ]
+            {},
+        ],
     },
     {
-        fn: "createTable",
+        fn: 'createTable',
         params: [
-            "Comments",
+            'Comments',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "comment": {
-                    "type": Sequelize.TEXT,
-                    "field": "comment",
-                    "allowNull": false
+                comment: {
+                    type: Sequelize.TEXT,
+                    field: 'comment',
+                    allowNull: false,
                 },
-                "image": {
-                    "type": Sequelize.STRING,
-                    "field": "image"
+                image: {
+                    type: Sequelize.STRING,
+                    field: 'image',
                 },
-                "UserId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "UserId",
-                    "allowNull": false
+                UserId: {
+                    type: Sequelize.INTEGER,
+                    field: 'UserId',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
                 },
-                "WarningId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "WarningId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Warnings",
-                        "key": "id"
+                WarningId: {
+                    type: Sequelize.INTEGER,
+                    field: 'WarningId',
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL',
+                    references: {
+                        model: 'Warnings',
+                        key: 'id',
                     },
-                    "allowNull": true
-                }
+                    allowNull: true,
+                },
             },
-            {}
-        ]
+            {},
+        ],
     },
     {
-        fn: "createTable",
+        fn: 'createTable',
         params: [
-            "Contracts",
+            'Contracts',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "description": {
-                    "type": Sequelize.TEXT,
-                    "field": "description",
-                    "allowNull": false
+                description: {
+                    type: Sequelize.TEXT,
+                    field: 'description',
+                    allowNull: false,
                 },
-                "GroupId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "GroupId",
-                    "allowNull": false
+                GroupId: {
+                    type: Sequelize.INTEGER,
+                    field: 'GroupId',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
                 },
-                "WarningId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "WarningId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Warnings",
-                        "key": "id"
+                WarningId: {
+                    type: Sequelize.INTEGER,
+                    field: 'WarningId',
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL',
+                    references: {
+                        model: 'Warnings',
+                        key: 'id',
                     },
-                    "allowNull": true
-                }
+                    allowNull: true,
+                },
             },
-            {}
-        ]
+            {},
+        ],
     },
     {
-        fn: "createTable",
+        fn: 'createTable',
         params: [
-            "Images",
+            'Images',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "url": {
-                    "type": Sequelize.STRING,
-                    "field": "url",
-                    "allowNull": false
+                url: {
+                    type: Sequelize.STRING,
+                    field: 'url',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
                 },
-                "WarningId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "WarningId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Warnings",
-                        "key": "id"
+                WarningId: {
+                    type: Sequelize.INTEGER,
+                    field: 'WarningId',
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL',
+                    references: {
+                        model: 'Warnings',
+                        key: 'id',
                     },
-                    "allowNull": true
-                }
+                    allowNull: true,
+                },
             },
-            {}
-        ]
+            {},
+        ],
     },
     {
-        fn: "createTable",
+        fn: 'createTable',
         params: [
-            "Statuses",
+            'Statuses',
             {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
+                id: {
+                    type: Sequelize.INTEGER,
+                    field: 'id',
+                    autoIncrement: true,
+                    primaryKey: true,
+                    allowNull: false,
                 },
-                "description": {
-                    "type": Sequelize.TEXT,
-                    "field": "description"
+                description: {
+                    type: Sequelize.TEXT,
+                    field: 'description',
                 },
-                "type": {
-                    "type": Sequelize.INTEGER,
-                    "field": "type",
-                    "defaultValue": 1
+                type: {
+                    type: Sequelize.INTEGER,
+                    field: 'type',
+                    defaultValue: 1,
                 },
-                "UserId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "UserId",
-                    "allowNull": false
+                UserId: {
+                    type: Sequelize.INTEGER,
+                    field: 'UserId',
+                    allowNull: false,
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
+                createdAt: {
+                    type: Sequelize.DATE,
+                    field: 'createdAt',
+                    allowNull: false,
                 },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
+                updatedAt: {
+                    type: Sequelize.DATE,
+                    field: 'updatedAt',
+                    allowNull: false,
                 },
-                "WarningId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "WarningId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "Warnings",
-                        "key": "id"
+                WarningId: {
+                    type: Sequelize.INTEGER,
+                    field: 'WarningId',
+                    onUpdate: 'CASCADE',
+                    onDelete: 'SET NULL',
+                    references: {
+                        model: 'Warnings',
+                        key: 'id',
                     },
-                    "allowNull": true
-                }
+                    allowNull: true,
+                },
             },
-            {}
-        ]
-    }
+            {},
+        ],
+    },
 ];
 
 module.exports = {
     pos: 0,
-    up: function(queryInterface, Sequelize)
-    {
+    up: function(queryInterface, Sequelize) {
         var index = this.pos;
         return new Promise(function(resolve, reject) {
             function next() {
-                if (index < migrationCommands.length)
-                {
+                if (index < migrationCommands.length) {
                     let command = migrationCommands[index];
-                    console.log("[#"+index+"] execute: " + command.fn);
+                    console.log('[#' + index + '] execute: ' + command.fn);
                     index++;
-                    queryInterface[command.fn].apply(queryInterface, command.params).then(next, reject);
-                }
-                else
-                    resolve();
+                    queryInterface[command.fn]
+                        .apply(queryInterface, command.params)
+                        .then(next, reject);
+                } else resolve();
             }
             next();
         });
     },
-    info: info
+    info: info,
 };
