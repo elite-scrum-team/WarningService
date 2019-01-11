@@ -1,9 +1,9 @@
 
 module.exports = async (req, res, next) => {
-    // handle errors 
-    
+    // handle errors
 
 
-    req.method = req.body.method;
+
+    //req.method = req.body.method;
     next();
 };
