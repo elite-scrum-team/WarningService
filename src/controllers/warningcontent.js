@@ -13,7 +13,7 @@ module.exports = {
                 ([k, v]) => v.map(it => ({ type: k, data: it }))
             ).sort(
                 (a, b) =>
-                    new Date(a.data.createdAt) - new Date(b.data.createdAt)
+                    new Date(b.data.createdAt) - new Date(a.data.createdAt)
             )
         ),
 };
