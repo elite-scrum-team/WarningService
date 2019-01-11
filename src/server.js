@@ -1,29 +1,16 @@
+
 const express = require('express')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
+
 require('dotenv').config()
 
-
-console.log("Initing DB")
-
 const sequelize = require('./models').sequelize
-console.log("Init successful")
-
-
-// const { MainCategory } = require('./models')
-// MainCategory.findAll({ raw: true }).then(res => console.log(res))
-// MainCategory.findById(1, { raw: true }).then(console.log)
-// MainCategory.findById(4).then(res => res.destroy()).then(console.log)
-
 
 const app = express()
 app.use(logger('dev'))
 app.use(bodyParser.json())
-
-/*
-app.get('/', async (req, res) => {
-    await res.send('Hello world11')
-})*/
+app.use(require('./middleware/addMethod.js');
 
 const routes = require('./routes')
 app.use('/', routes)
