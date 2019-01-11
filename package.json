@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start": "sequelize db:migrate && node server.js",
-    "start:dev": "nodemon server.js",
+    "start": "sequelize db:migrate && node src/server.js",
+    "start:dev": "nodemon src/server.js",
     "make-migrations": "makemigration --name",
     "migrate": "sequelize db:migrate"
   },
@@ -31,6 +31,7 @@
     "lint-staged": "^8.1.0",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.4",
+    "prom-client": "^11.2.1",
     "sequelize": "^4.42.0"
   },
   "devDependencies": {
