@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const client = require('prom-client');
 
+const db = require('./models');
+
+db.sequelize.sync({ force: true });
+
 const app = express();
 const port = process.env.port || 4000;
 
@@ -19,6 +23,9 @@ app.get('/metrics', async (req, res) => {
 
 app.use(bodyParser());
 app.use(morgan('dev'));
+
+// routers
+app.use('/api/v1/warning', require('./routers/warning'));
 
 app.get('/', async (req, res) => {
     await res.send({
