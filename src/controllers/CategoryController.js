@@ -4,7 +4,7 @@ module.exports = {
     async retrive() {
         try {
             const res = await db.category.findAll();
-            return res.dataValues;
+            return res.map(r => r.dataValues);
         } catch(err) {
             console.error(err);
             throw err;
