@@ -6,7 +6,9 @@ const CategoryController = require('../controllers/CategoryController');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    await res.send(await CategoryController.retrive());
+    const r = await CategoryController.retrive();
+    console.log(r);
+    await res.send(r);
 });
 
 module.exports = router;
