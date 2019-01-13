@@ -7,6 +7,16 @@ const client = require('prom-client');
 const app = express();
 const port = process.env.port || 4000;
 
+// metrics
+client.collectDefaultMetrics({ timeout: 5000 });
+
+app.get('/metrics', async (req, res) => {
+    await res.set('Content-Type', client.register.contentType);
+    await res.end(client.register.metrics());
+});
+
+// middleware
+
 app.use(bodyParser());
 app.use(morgan('dev'));
 
