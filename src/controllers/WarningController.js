@@ -31,9 +31,20 @@ module.exports = {
         // TODO: userId logic
         const { offset, limit } = filters
         try {
+<<<<<<< HEAD
             const result = db.warning.findAll({ offset, limit, include: [{ all: true }] })
             const locations = await MapService.location.retrieve({id__in: result.map(it => it.dataValues.locationId)});
             console.log(locations);
+=======
+            const result = db.warning.findAll({ 
+                offset, limit, 
+                include: [{ 
+                    model: db.status, 
+                    order: [[ 'createdAt', 'DESC' ]] ,
+                    limit: 1
+                }, { model: db.category }]
+            })
+>>>>>>> 1037700157c15629ea44cfdd1a19db5173fd67a9
             return result.map(it => it.dataValues)
         } catch (err) {
             console.error(err)
