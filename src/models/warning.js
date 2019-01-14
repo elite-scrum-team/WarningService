@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Warning.assosiate = models => {
         Warning.hasMany(models.Category);
+        Warning.hasMany(models.Status)
     }
     return Warning;
 };
