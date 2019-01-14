@@ -31,7 +31,7 @@ module.exports = {
         // TODO: userId logic
         const { offset, limit } = filters
         try {
-            const result = db.warning.findAll({ 
+            const r = db.warning.findAll({ 
                 offset, limit, 
                 include: [{ 
                     model: db.status, 
@@ -39,10 +39,22 @@ module.exports = {
                     limit: 1
                 }, { model: db.category }]
             })
+            const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
+            const locations = await MapService.location.retrieve({id__in: ids});
+             
+            const locationsObject = {};
+            await locations.map(it => locationsObject[it.id] = it);
 
-            const locations = await MapService.location.retrieve({id__in: result.map(it => it.dataValues.locationId)});
-            console.log(locations);
-            return result.map(it => it.dataValues)
+            return r.map(it => {
+                const warningFromDatabase = it.dataValues;
+                const location = locationsObject[warningFromDatabase.locationId];
+                delete warningFromDatabase['locationId'];
+                if (location)
+                    warningFromDatabase.location = location;
+                else
+                    warningFromDatabase.location = null;
+                return warningFromDatabase;
+            })
         } catch (err) {
             console.error(err)
             throw err
@@ -50,7 +62,10 @@ module.exports = {
     },
 
     async retriveOne(id) {
-        const instance = await db.warning.findById(id);
+        const instance = (await db.warning.findByPk(id)).dataValues;
+        const location = await MapService.location.retrieveOne(instance.locationId);
+        delete instance['locationId'];
+        instance.location = location;
         return instance; 
     
     }
