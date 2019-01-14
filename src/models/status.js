@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         }
     }, {})
-    Status.assosiate = models => {
-        Status.belongsTo(models.Warning)
+    Status.associate = models => {
+        Status.belongsTo(models.warning)
     }
     return Status;
 }
