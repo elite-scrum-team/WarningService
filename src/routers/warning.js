@@ -3,6 +3,8 @@ const express = require('express');
 
 const WarningController = require('../controllers/WarningController');
 
+const addUserData = require('../middleware/user');
+
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {
@@ -28,7 +30,7 @@ router.post('/', async (req, res) => {
     await res.send(instanceOrError);    
 });
 
-router.get('/', async (req, res) => {
+router.get('/', addUserData, async (req, res) => {
     const result = await WarningController.retrieve(req.query, req.query.internalUserId)
     await res.send(result)
 })
