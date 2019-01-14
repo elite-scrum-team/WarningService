@@ -24,7 +24,14 @@ module.exports = {
         // TODO: userId logic
         const { offset, limit } = filters
         try {
-            const result = db.warning.findAll({ offset, limit, include: [{ all: true }] })
+            const result = db.warning.findAll({ 
+                offset, limit, 
+                include: [{ 
+                    model: db.status, 
+                    order: [[ 'createdAt', 'DESC' ]] ,
+                    limit: 1
+                }, { model: db.category }]
+            })
             return result.map(it => it.dataValues)
         } catch (err) {
             console.error(err)
