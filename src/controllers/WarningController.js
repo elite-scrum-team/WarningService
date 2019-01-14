@@ -21,7 +21,26 @@ module.exports = {
             console.error(err);
             throw err;
         }    
-    }     
+    },   
 
+
+    async retrieve(filters, userId) {
+        // TODO: userId logic
+        const { offset, limit } = filters
+        try {
+            const result = db.warning.findAll({ offset, limit })
+            return result.map(it => it.dataValues)
+        } catch (err) {
+            console.error(err)
+            throw err
+        }
+    },
+
+
+    async retriveOne(id) {
+        const instance = await db.warning.findById(id);
+        return instance; 
+    
+    }
 };
 
