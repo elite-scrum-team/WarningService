@@ -20,8 +20,8 @@ module.exports = {
         // TODO: userId logic
         const { offset, limit } = filters
         try {
-            const result = db.warning.findAll({ raw: true, offset, limit })
-            return result
+            const result = db.warning.findAll({ offset, limit })
+            return result.map(it => it.dataValues)
         } catch (err) {
             console.error(err)
             throw err
