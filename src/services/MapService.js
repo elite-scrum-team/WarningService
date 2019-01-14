@@ -11,6 +11,10 @@ module.exports = {
                 location: location,
             });
             return r.json();
+        },
+        async retrieve(filters) {
+            const r = await services.fetch.get('map', 'location', filters);
+            return r.json();
         }
     }
 }
