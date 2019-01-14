@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     const Warning = sequelize.define('warning', {
         id: {
             primaryKey: true,
-            type: DataTypes.UUIDV4,
+            type: DataTypes.UUID,
             defaultValue: Sequelize.UUIDV4,
         },
         description: {
