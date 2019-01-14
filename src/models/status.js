@@ -20,4 +20,5 @@ module.exports = (sequelize, DataTypes) => {
     Status.assosiate = models => {
         Status.belongsTo(models.Warning)
     }
+    return Status;
 }

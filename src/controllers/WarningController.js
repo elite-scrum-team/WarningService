@@ -7,7 +7,11 @@ module.exports = {
             description: warning.description,
         };
         try {
-            const res = await db.warning.create(instance);
+            const res = await db.sequelize.transaction(async t => {
+                const warningInstance = await db.warning.create(instance);
+                const statusInstance = await db.status.create({ warningId: warningInstance.id, userId: warningInstance.userId });
+                return warningInstance;
+            })
             return res.dataValues;
         } catch(err) {
             console.error(err);
