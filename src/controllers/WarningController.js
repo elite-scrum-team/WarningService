@@ -34,10 +34,10 @@ module.exports = {
             const r = db.warning.findAll({ 
                 offset, limit, 
                 include: [{ 
-                    model: db.status, 
-                    order: [[ 'createdAt', 'DESC' ]] ,
+                    model: db.status,
                     limit: 1
-                }, { model: db.category }]
+                }, { model: db.category }],
+                order: [[ db.status, 'createdAt', 'DESC' ]] 
             })
             const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
             const locations = await MapService.location.retrieve({id__in: ids});
@@ -63,10 +63,10 @@ module.exports = {
 
     async retriveOne(id) {
         const instance = (await db.warning.findByPk(id, { 
-            include: [{ 
-                model: db.status, 
-                order: [[ 'createdAt', 'DESC' ]]
-            }, { model: db.category }]
+            include: [{ all: true }],
+            order: [
+                [db.status, 'createdAt', 'DESC']
+            ]
         })).dataValues;
         const location = await MapService.location.retrieveOne(instance.locationId);
         delete instance['locationId'];
