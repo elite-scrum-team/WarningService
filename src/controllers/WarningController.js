@@ -62,7 +62,7 @@ module.exports = {
     },
 
     async retriveOne(id) {
-        const instance = (await db.warning.findByPk(id, { include: [{ all: true }] })).dataValues;
+        const instance = (await db.warning.findByPk(id, { include: [{ all: true, order: [[ 'createdAt', 'DESC' ]] }] })).dataValues;
         const location = await MapService.location.retrieveOne(instance.locationId);
         delete instance['locationId'];
         instance.location = location;
