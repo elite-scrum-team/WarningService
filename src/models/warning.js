@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         },
 
     });
-    Warning.assosiate = models => {
-        Warning.hasMany(models.Category);
-        Warning.hasMany(models.Status)
+    Warning.associate = models => {
+        Warning.belongsTo(models.category);
+        Warning.hasMany(models.status)
     }
     return Warning;
 };

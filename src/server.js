@@ -6,7 +6,7 @@ const client = require('prom-client');
 
 const db = require('./models');
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
     db.category.create({ name: 'yolo' });
 });
 
