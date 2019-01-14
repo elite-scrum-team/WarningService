@@ -65,10 +65,8 @@ module.exports = {
         const instance = (await db.warning.findByPk(id, { 
             include: [{ 
                 model: db.status, 
-                order: [[ 'createdAt', 'DESC' ]] 
-            }, {
-                mode: db.category
-            }] 
+                order: [[ 'createdAt', 'DESC' ]]
+            }, { model: db.category }]
         })).dataValues;
         const location = await MapService.location.retrieveOne(instance.locationId);
         delete instance['locationId'];
