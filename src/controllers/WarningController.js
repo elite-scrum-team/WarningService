@@ -10,9 +10,12 @@ module.exports = {
 
         try {
             // Create and get locationId from MapService
-            const location = MapService.location.create(warning.location);
+            const location = await MapService.location.create(warning.location);
             console.log("Location: " + location);
             instance.locationId = location.id;
+            if(!location) {
+                throw new Error('Could not store location...');
+            }
 
             // Create instance in db
             const res = await db.warning.create(instance);
@@ -22,7 +25,6 @@ module.exports = {
             throw err;
         }    
     },   
-
 
     async retrieve(filters, userId) {
         // TODO: userId logic
@@ -36,11 +38,11 @@ module.exports = {
         }
     },
 
-
     async retriveOne(id) {
         const instance = await db.warning.findById(id);
         return instance; 
     
     }
+
 };
 
