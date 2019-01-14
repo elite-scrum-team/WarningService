@@ -29,6 +29,7 @@ app.use(morgan('dev'));
 // routers
 app.use('/api/v1/warning', require('./routers/warning'));
 app.use('/api/v1/category', require('./routers/category'));
+app.use('/api/v1/status', require('./routers/status'))
 
 app.get('/', async (req, res) => {
     await res.send({

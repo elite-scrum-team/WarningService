@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 0
         },
 
+        description: {
+            type: DataTypes.STRING,
+            defaultValue: ""
+        },
+
         userId: {
             type: DataTypes.UUID
         }
