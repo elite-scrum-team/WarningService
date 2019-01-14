@@ -1,4 +1,5 @@
 const db = require('../models');
+const MapService = require('../services/MapService');
 
 module.exports = {
     async create(warning, userId) {
@@ -6,7 +7,15 @@ module.exports = {
             userId: userId,
             description: warning.description,
         };
+
         try {
+            // Create and get locationId from MapService
+            const location = await MapService.location.create(warning.location);
+            instance.locationId = location.id;
+            if(!location) {
+                throw new Error('Could not store location...');
+            }
+
             const res = await db.sequelize.transaction(async t => {
                 const warningInstance = await db.warning.create(instance);
                 const statusInstance = await db.status.create({ warningId: warningInstance.id, userId: warningInstance.userId });
@@ -18,7 +27,6 @@ module.exports = {
             throw err;
         }    
     },   
-
 
     async retrieve(filters, userId) {
         // TODO: userId logic
@@ -39,11 +47,11 @@ module.exports = {
         }
     },
 
-
     async retriveOne(id) {
         const instance = await db.warning.findById(id);
         return instance; 
     
     }
+
 };
 
