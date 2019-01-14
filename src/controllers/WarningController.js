@@ -13,7 +13,20 @@ module.exports = {
             console.error(err);
             throw err;
         }    
-    }     
+    },   
+
+
+    async retrieve(filters, userId) {
+        // TODO: userId logic
+        const { offset, limit } = filters
+        try {
+            const result = db.warning.findAll({ raw: true, offset, limit })
+            return result
+        } catch (err) {
+            console.error(err)
+            throw err
+        }
+    }
 
 };
 

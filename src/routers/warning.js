@@ -10,4 +10,9 @@ router.post('/', async (req, res) => {
     await res.send(instanceOrError);    
 });
 
+router.get('/', async (req, res) => {
+    const result = await WarningController.retrieve(req.query, req.query.internalUserId)
+    await res.send(result)
+})
+
 module.exports = router;
