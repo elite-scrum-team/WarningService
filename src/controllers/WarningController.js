@@ -68,7 +68,17 @@ module.exports = {
         instance.location = location;
         return instance; 
     
-    }
+    },
 
+
+    async update(id, values) {
+        try {
+            const warning = await db.warning.findByPk(id)
+            return await warning.update(values)
+        } catch (err) {
+            console.error(err)
+            throw err
+        }
+    }
 };
 
