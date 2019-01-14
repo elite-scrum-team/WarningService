@@ -13,7 +13,11 @@ module.exports = {
             console.error(err);
             throw err;
         }    
-    }     
-
+    }, 
+    async retriveOne(id) {
+        const instance = await db.warning.findById(id);
+        return instance; 
+    
+    }
 };
 
