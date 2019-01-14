@@ -11,7 +11,7 @@ db.sequelize.sync({ force: true }).then(() => {
 });
 
 const app = express();
-const port = process.env.port || 4000;
+const port = process.env.port || 4000;  
 
 // metrics
 client.collectDefaultMetrics({ timeout: 5000 });
