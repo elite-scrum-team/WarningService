@@ -7,7 +7,10 @@ require('dotenv').config();
 
 const db = require('./models');
 
-db.sequelize.sync({ alter: true });
+db.sequelize.sync({ alter: true })
+.then(() => {
+    db.category.findOrCreate({where: {name: 'Hull i vei'}, defaults: {}});
+})
 
 const app = express();
 const port = process.env.port || 4000;  
