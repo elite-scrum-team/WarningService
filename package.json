@@ -19,14 +19,15 @@
   },
   "homepage": "https://github.com/elite-scrum-team/WarningService#readme",
   "dependencies": {
-    "@igorivaniuk/multer-google-storage": "^1.0.2",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.4",
+    "node-fetch": "^2.3.0",
     "prom-client": "^11.2.1",
+    "querystring": "^0.2.0",
     "sequelize": "^4.42.0"
   },
   "devDependencies": {
