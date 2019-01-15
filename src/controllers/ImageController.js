@@ -5,7 +5,7 @@ const db = require('../models')
 module.exports = {
 
     async create({warningId, fileURL}) {
-        if(!imageName) {
+        if(!fileURL) {
             return;
         }
 
