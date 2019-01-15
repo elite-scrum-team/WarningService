@@ -11,5 +11,4 @@ module.exports = {
     async retriveOne(id) {
         return await services.fetch.get('user', `user/${id}`, {});
     }
-
 }

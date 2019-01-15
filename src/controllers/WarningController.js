@@ -76,7 +76,6 @@ module.exports = {
     
     },
 
-
     async update(id, values) {
         try {
             const warning = await db.warning.findByPk(id)
