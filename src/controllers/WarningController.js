@@ -84,7 +84,7 @@ module.exports = {
         const instance = await db.warning.findByPk(id, {
             include: [{ all: true }]
         })
-        if(!instance) throw Error("Instance failed")
+        if(!instance) return db.sequelize.Promise.reject("Instance failed")
         const content = Object.entries(instance.toJSON())
             .filter(([k, v]) => v instanceof Array && k !== 'Images')
             .map(([k, v]) => v.map(it => ({ type: k, data: it })))
