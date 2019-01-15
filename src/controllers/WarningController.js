@@ -70,7 +70,7 @@ module.exports = {
                 separate: true,
                 order: [[ 'createdAt', 'DESC' ]],
                 limit: 1
-            }],
+            }, { model: db.category }],
         })).dataValues;
         const location = await MapService.location.retrieveOne(instance.locationId);
         delete instance['locationId'];
