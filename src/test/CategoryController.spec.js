@@ -1,0 +1,82 @@
+const proxyquire = require('proxyquire');
+const chai = require('chai');
+chai.use(require('sinon-chai'));
+let expect = chai.expect;
+const sinon = require('sinon');
+
+const { makeMockModels } = require('sequelize-test-helpers');
+
+const mockModels = makeMockModels({
+  category: { findAll: sinon.stub() },
+});
+
+const save = proxyquire('../controllers/CategoryController', {
+  '../models': mockModels,
+});
+let result;
+
+const fakeCategory = { dataValues: sinon.stub() };
+const fakeCategory2 = { dataValues: sinon.stub() };
+const arr = [fakeCategory, fakeCategory2];
+
+describe('User testing', () => {
+
+  const resetStubs = () => {
+    mockModels.category.findAll.resetHistory();
+    fakeCategory.dataValues.resetHistory();
+  };
+
+  context('testing retrive() when a category doesnt exist ', () => {
+    before(async () => {
+      mockModels.category.findAll.resolves(undefined);
+      result = await save.retrive();
+    });
+
+    after(resetStubs);
+
+    it('called category.retrieve()', () => {
+      expect(mockModels.category.findAll).to.have.been.called;
+    });
+
+    it('returned value if when no category found', () => {
+      expect(result).to.eql({ error: 'no categories found', statusCode: 404 });
+    });
+  });
+
+  context('testing retrieve() when only a single category exist', () => {
+    before(async () => {
+      mockModels.category.findAll.resolves(fakeCategory);
+      result = await save.retrive();
+    });
+
+    after(resetStubs);
+
+    it('called category.retrieve()', () => {
+      expect(mockModels.category.findAll).to.have.been.called;
+    });
+
+    it('returned the category', () => {
+      expect(result).to.deep.equal(fakeCategory.dataValues);
+    });
+  })
+
+  context('testing retrieve() when two categories exist', () => {
+    before(async () => {
+      mockModels.category.findAll.resolves(fakeCategory);
+      mockModels.category.findAll.resolves(fakeCategory2);
+      result = await save.retrive();
+    });
+
+    after(resetStubs);
+
+    it('called category.retrieve()', () => {
+      expect(mockModels.category.findAll).to.have.been.called;
+    });
+
+    it('returned the category', () => {
+      expect(result).to.contain(
+        fakeCategory.dataValues
+      );
+    });
+  })
+});
