@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID,
             defaultValue: Sequelize.UUIDV4,
         },
-        name: {
+        fileURL: {
             type: DataTypes.TEXT,
         }
     }, {
@@ -26,5 +26,8 @@ module.exports = (sequelize, DataTypes) => {
                 }),
         },
     });
+    Image.associate = models => {
+        Image.belongsTo(models.warning)
+    }
     return Image;
 }

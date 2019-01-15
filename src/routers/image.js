@@ -8,18 +8,20 @@ router
         console.log(req.body);
         // Check if user is allowed to add image
         const warningId = req.body.warningId;
+        const fileURL = req.body.fileURL
         console.log("WarningID: ", warningId);
-        console.log("File: ", req.file);
+        console.log("FILEURL: ", req.body.fileURL)
 
         try {
             let warning = await WarningController.retriveOne(warningId);
-
+            /*
             if(warning.userId !== req.query.internalUserId) {
                 res.send('Not authorized', 403);
                 return;
             }
+            */
 
-            const result = await ImageController.create(warningId, req.file, req.query.internalUserId)
+            const result = await ImageController.create({warningId, fileURL}, req.query.internalUserId)
             if(result) {
                 await res.send(result)
             } else {
