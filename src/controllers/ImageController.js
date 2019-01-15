@@ -1,17 +1,17 @@
 const db = require('../models')
 
-//db.status.sync({force: true})
+//db.image.sync({force: true})
 
 module.exports = {
 
-    async create(warningId, imageName, userId) {
+    async create({warningId, fileURL}) {
         if(!imageName) {
             return;
         }
 
         const instance = {
             warningId,
-            name: imageName,
+            fileURL,
         };
         
         try {
