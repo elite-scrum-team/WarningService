@@ -25,14 +25,6 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/content', async (req, res) => {
-    const result = await WarningController.retrieveContent(req.params.id)
-    if (result) {
-        await res.send(result)
-    } else {
-        await res.send({ error: 'Could not get content' }, 500)
-    }
-})
 
 router.post('/', async (req, res) => {
     const instanceOrError = await WarningController.create(req.body, req.query.internalUserId);
