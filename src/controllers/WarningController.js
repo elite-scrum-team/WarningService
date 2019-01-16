@@ -41,7 +41,7 @@ module.exports = {
             }
                 
             if (excludeStatus && excludeStatus.length > 0)
-                where.status = { [Op.notIn]: exclude.status }
+                where.status = { [Op.notIn]: excludeStatus }
             else
                 return { error: "No supported filters in exclude [status]", status: 400 }
                 
