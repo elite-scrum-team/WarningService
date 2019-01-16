@@ -46,7 +46,7 @@ module.exports = {
                 if (!(onlyStatus instanceof Array)) onlyStatus = [Number.parseInt(onlyStatus)]
                 if (onlyStatus.length > 0) {
                     onlyStatus = onlyStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    statusFilter = (instance) => ![...onlyStatus].includes(instance.dataValues.statuses[0].type)
+                    statusFilter = (instance) => [...onlyStatus].includes(instance.dataValues.statuses[0].type)
                 }
             }
                 
