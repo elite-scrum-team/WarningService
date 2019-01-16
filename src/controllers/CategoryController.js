@@ -5,7 +5,7 @@ module.exports = {
         try {
             const res = await db.category.findAll();
             if (res === undefined) {
-                return { error: 'no categories found', statusCode: 404 };
+                return null;
             } else if (!Array.isArray(res)) {
                 return res.dataValues;
             } else {
@@ -16,4 +16,4 @@ module.exports = {
             throw err;
         }
     }
-}
+};
