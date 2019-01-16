@@ -1,6 +1,8 @@
 const db = require('../models');
 const MapService = require('../services/MapService');
 
+const Op = require('sequelize').Op
+
 const flatten = require('../util/flatten')
 
 module.exports = {
