@@ -40,8 +40,10 @@ module.exports = {
                 else return { error: 'No userId received', status: 400 }
             }
                 
-            if (excludeStatus && excludeStatus.length > 0)
+            if (excludeStatus && excludeStatus.length > 0) {
+                excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
                 where.status = { [Op.notIn]: excludeStatus }
+            }
             else
                 return { error: "No supported filters in exclude [status]", status: 400 }
                 
