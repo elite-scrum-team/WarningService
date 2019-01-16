@@ -7,18 +7,18 @@ const {
     checkPropertyExists,
 } = require('sequelize-test-helpers');
 
-const categoryModel = require('../models/category');
+const imageModel = require('../models/image');
 
-describe('src/models/category', () => {
-    const Model = categoryModel(sequelize, dataTypes);
+describe('src/models/image', () => {
+    const Model = imageModel(sequelize, dataTypes);
     const instance = new Model();
 
     // checking if the model is the same instance as the newmodel()
-    checkModelName(Model)('category');
+    checkModelName(Model)('image');
 
     context('properties', () => {
-        ['id', 'name'].forEach(
-          checkPropertyExists(instance)
+        ['id', 'fileURL'].forEach(
+            checkPropertyExists(instance)
         );
     });
 });
