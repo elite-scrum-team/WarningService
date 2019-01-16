@@ -44,7 +44,10 @@ module.exports = {
             if (excludeStatus) {
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    filters.push(dataValues => excludeStatus.includes(dataValues.statuses[0].type))
+                    filters.push(dataValues => {
+                        console.log(dataValues)
+                        return excludeStatus.includes(dataValues.statuses[0].type)
+                    })
                 }
                 else
                     return { error: "No supported filters in exclude [status]", status: 400 } 
