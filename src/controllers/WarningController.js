@@ -45,10 +45,10 @@ module.exports = {
             if (excludeStatus) {
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    filters = (instance => {
+                    filters = instance => {
                         console.log("awiudadasd", instance.dataValues)
                         return ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
-                    })
+                    }
                 }
                 else return { error: "No supported filters in exclude [status]", status: 400 } 
             }                 
