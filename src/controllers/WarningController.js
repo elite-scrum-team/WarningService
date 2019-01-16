@@ -43,7 +43,7 @@ module.exports = {
             }
                 
             if (excludeStatus) {
-                if (excludeStatus.length > 0) {
+                if (excludeStatus.length > 0 && excludeStatus instanceof Array) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
                     statusFilter = function(instance) {
                         console.log("awiudadasd", instance.dataValues)
