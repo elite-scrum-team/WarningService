@@ -66,7 +66,10 @@ describe('User testing', () => {
             result = await save.retrive();
         });
 
-        after(resetStubs);
+        after( () => {
+            resetStubs;
+            arr.map( fake => fake.dataValues.resetHistory());
+        });
 
         it('called category.retrieve()', () => {
             expect(mockModels.category.findAll).to.have.been.called;
