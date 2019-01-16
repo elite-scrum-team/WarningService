@@ -31,7 +31,7 @@ module.exports = {
         }
     },
 
-    async retrieve({ offset, limit, exclude, useUserId = false, municipality }, userId) {
+    async retrieve({ offset, limit, excludeStatus, useUserId = false, municipality }, userId) {
         // TODO: userId logic
         try {
             let where = {}
@@ -40,12 +40,10 @@ module.exports = {
                 else return { error: 'No userId received', status: 400 }
             }
                 
-            if (exclude) {
-                if (exclude.status instanceof Array) 
-                    where.status = { [Op.notIn]: exclude.status }
-                else
-                    return { error: "No supported filters in exclude [status]", status: 400 }
-            }
+            if (excludeStatus && excludeStatus.length > 0)
+                where.status = { [Op.notIn]: exclude.status }
+            else
+                return { error: "No supported filters in exclude [status]", status: 400 }
                 
             if (municipality) {
                 let warningIdsFromMunicipality = await MapService.location.retrieve({ municipality })
