@@ -39,14 +39,14 @@ module.exports = {
             }
                 
             if (exclude) {
-                if (exlude.status instanceof Array) 
+                if (exclude.status instanceof Array) 
                     where.status = { [Op.notIn]: exclude.status }
                 else
                     return { error: "No supported filters in exclude [status]", status: 400 }
             }
                 
             if (municipality) {
-                let warningIdsFromMunicipality = await MapService.retrieve({ municipality })
+                let warningIdsFromMunicipality = await MapService.location.retrieve({ municipality })
 
                 if (warningIdsFromMunicipality instanceof Array && warningIdsFromMunicipality.length > 0 && warningIdsFromMunicipality[0].id !== undefined) {
                     warningIdsFromMunicipality = warningIdsFromMunicipality.map(it => it.id)
