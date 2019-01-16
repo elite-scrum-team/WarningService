@@ -58,12 +58,11 @@ describe('User testing', () => {
     it('returned the category', () => {
       expect(result).to.deep.equal(fakeCategory.dataValues);
     });
-  })
+  });
 
   context('testing retrieve() when two categories exist', () => {
     before(async () => {
-      mockModels.category.findAll.resolves(fakeCategory);
-      mockModels.category.findAll.resolves(fakeCategory2);
+      mockModels.category.findAll.resolves(arr);
       result = await save.retrive();
     });
 
@@ -74,8 +73,8 @@ describe('User testing', () => {
     });
 
     it('returned the category', () => {
-      expect(result).to.contain(
-        fakeCategory.dataValues
+      expect(result).to.include.members(
+        [fakeCategory.dataValues, fakeCategory2.dataValues]
       );
     });
   })

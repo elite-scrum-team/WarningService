@@ -7,7 +7,7 @@ module.exports = {
             if (res === undefined) {
                 return { error: 'no categories found', statusCode: 404 };
             } else if (!Array.isArray(res)) {
-              return res.dataValues;
+                return res.dataValues;
             } else {
                 return res.map(r => r.dataValues);
             }
