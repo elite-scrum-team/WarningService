@@ -6,7 +6,7 @@ module.exports = {
 
     async create({warningId, fileURL}) {
         if(!fileURL) {
-            return;
+            return null;
         }
 
         const instance = {
@@ -15,12 +15,11 @@ module.exports = {
         };
         
         try {
-            const result = await db.image.create(instance)
+            const result = await db.image.create(instance);
             return result.dataValues;
         } catch (err) {
-            console.error(err)
+            console.error(err);
             throw err
         }
     }
-
-}
+};
