@@ -43,7 +43,7 @@ module.exports = {
             }
                 
             if (excludeStatus) {
-                if (excludeStatus instanceof Array && excludeStatus instanceof Number) excludeStatus = [excludeStatus]
+                if (!(excludeStatus instanceof Array)) excludeStatus = [Number.parseInt(excludeStatus)]
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
                     statusFilter = function(instance) {
