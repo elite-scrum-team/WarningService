@@ -35,6 +35,7 @@ module.exports = {
         // TODO: userId logic
         try {
             let where = {}
+            let filters = []
             if (useUserId) {
                 if (userId) where.userId = userId
                 else return { error: 'No userId received', status: 400 }
@@ -43,7 +44,7 @@ module.exports = {
             if (excludeStatus) {
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    where.statuses[0].type = { [Op.notIn]: excludeStatus }
+                    filters.append(dataValues => excludeStatus.includes(dataValues.statuses[0].type))
                 }
                 else
                     return { error: "No supported filters in exclude [status]", status: 400 } 
@@ -76,7 +77,12 @@ module.exports = {
             await locations.map(it => locationsObject[it.id] = it);
 
             return r.map(it => {
-                const warningFromDatabase = it.dataValues;
+                const warningFromDatabase = it.dataValues.filter(dataValues => {
+                    for(let i = 0; i < filters.length; i++) {
+                        if (filters[i](dataValues)) return false
+                    }
+                    return true
+                });
                 const location = locationsObject[warningFromDatabase.locationId];
                 delete warningFromDatabase['locationId'];
                 if (location)
