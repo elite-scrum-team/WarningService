@@ -63,7 +63,7 @@ module.exports = {
             }
             
 
-            let r = db.warning.findAll({
+            let r = await db.warning.findAll({
                 offset, limit,
                 where,
                 include: [{
