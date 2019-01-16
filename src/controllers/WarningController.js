@@ -35,7 +35,8 @@ module.exports = {
         // TODO: userId logic
         try {
             let where = {}
-            let filters = []
+            let statusFilter = null
+
             if (useUserId) {
                 if (userId) where.userId = userId
                 else return { error: 'No userId received', status: 400 }
@@ -44,14 +45,12 @@ module.exports = {
             if (excludeStatus) {
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    console.log(excludeStatus)
-                    filters.push(dataValues => {
-                        console.log(dataValues)
-                        return [...excludeStatus].includes(dataValues.statuses[0].type)
+                    filters = (instance => {
+                        console.log("awiudadasd", instance.dataValues)
+                        return ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
                     })
                 }
-                else
-                    return { error: "No supported filters in exclude [status]", status: 400 } 
+                else return { error: "No supported filters in exclude [status]", status: 400 } 
             }                 
             if (municipality) {
                 let warningIdsFromMunicipality = await MapService.location.retrieve({ municipality })
@@ -73,12 +72,7 @@ module.exports = {
                     order: [[ 'createdAt', 'DESC' ]],
                     limit: 1
                 }, { model: db.category }],
-            }).filter(dataValues => {
-                    for(let i = 0; i < filters.length; i++) {
-                        if (filters[i](dataValues)) return false
-                    }
-                    return true
-                })
+            }).filter(statusFilter)
             const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
             const locations = await MapService.location.retrieve({id__in: ids});
 
