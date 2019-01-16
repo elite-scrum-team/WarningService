@@ -29,11 +29,33 @@ module.exports = {
         }
     },
 
-    async retrieve({ offset, limit }, userId) {
+    async retrieve({ offset, limit, exclude, useUserId = false, municipality }, userId) {
         // TODO: userId logic
         try {
+            let where = {}
+            if (useUserId && userId) where.userId = userId
+            if (exlude) {
+                if (exlude.status instanceof Array) 
+                    where.status = { [Op.notIn]: exclude.status }
+                else {
+                    throw Error("No supported filters in exclude [status]")
+                }
+            }
+                
+            if (municipality) {
+                let warningIdsFromMunicipality = await MapService.retrieve({ municipality })
+
+                if (warningIdsFromMunicipality instanceof Array && warningIdsFromMunicipality.length > 0 && warningIdsFromMunicipality[0].id !== undefined) {
+                    warningIdsFromMunicipality = warningIdsFromMunicipality.map(it => it.id)
+                    where.locationId = { [Op.in]: warningIdsFromMunicipality }
+                } else
+                    throw Error("MapService failed fetching warningIds from municipality")
+            }
+            
+
             const r = db.warning.findAll({
                 offset, limit,
+                where,
                 include: [{
                     model: db.status,
                     separate: true,
