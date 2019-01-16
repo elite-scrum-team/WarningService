@@ -33,8 +33,12 @@ module.exports = {
         // TODO: userId logic
         try {
             let where = {}
-            if (useUserId && userId) where.userId = userId
-            if (exlude) {
+            if (useUserId) {
+                if (userId) where.userId = userId
+                else throw Error("User is not logged in")
+            }
+                
+            if (exclude) {
                 if (exlude.status instanceof Array) 
                     where.status = { [Op.notIn]: exclude.status }
                 else {
