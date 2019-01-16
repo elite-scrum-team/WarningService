@@ -35,15 +35,14 @@ module.exports = {
             let where = {}
             if (useUserId) {
                 if (userId) where.userId = userId
-                else throw Error("User is not logged in")
+                else return { error: 'No userId received' }
             }
                 
             if (exclude) {
                 if (exlude.status instanceof Array) 
                     where.status = { [Op.notIn]: exclude.status }
-                else {
-                    throw Error("No supported filters in exclude [status]")
-                }
+                else
+                    return { error: "No supported filters in exclude [status]" }
             }
                 
             if (municipality) {
@@ -53,7 +52,7 @@ module.exports = {
                     warningIdsFromMunicipality = warningIdsFromMunicipality.map(it => it.id)
                     where.locationId = { [Op.in]: warningIdsFromMunicipality }
                 } else
-                    throw Error("MapService failed fetching warningIds from municipality")
+                    return { error: "MapService failed fetching warningIds from municipality" }
             }
             
 
