@@ -43,16 +43,18 @@ module.exports = {
             }
 
             if (onlyStatus) {
-                statusFilter = (instance) => instance.dataValues.statuses[0].type == onlyStatus
+                if (!(onlyStatus instanceof Array)) onlyStatus = [Number.parseInt(onlyStatus)]
+                if (onlyStatus.length > 0) {
+                    onlyStatus = onlyStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
+                    statusFilter = (instance) => ![...onlyStatus].includes(instance.dataValues.statuses[0].type)
+                }
             }
                 
             if (excludeStatus && !onlyStatus) {
                 if (!(excludeStatus instanceof Array)) excludeStatus = [Number.parseInt(excludeStatus)]
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    statusFilter = function(instance) {
-                        return ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
-                    }
+                    statusFilter = (instance) => ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
                 }
                 else return { error: "No supported filters in exclude [status]", status: 400 } 
             }              
