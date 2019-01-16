@@ -31,7 +31,7 @@ module.exports = {
         }
     },
 
-    async retrieve({ offset, limit, excludeStatus, useUserId = false, municipality }, userId) {
+    async retrieve({ offset, limit, excludeStatus, onlyStatus, useUserId = false, municipality }, userId) {
         // TODO: userId logic
         try {
             let where = {}
@@ -41,18 +41,21 @@ module.exports = {
                 if (userId) where.userId = userId
                 else return { error: 'No userId received', status: 400 }
             }
+
+            if (onlyStatus) {
+                statusFilter = (instance) => instance.dataValues.statuses[0].type == onlyStatus
+            }
                 
-            if (excludeStatus) {
+            if (excludeStatus && !onlyStatus) {
                 if (!(excludeStatus instanceof Array)) excludeStatus = [Number.parseInt(excludeStatus)]
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
                     statusFilter = function(instance) {
-                        console.log("awiudadasd", instance.dataValues)
                         return ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
                     }
                 }
                 else return { error: "No supported filters in exclude [status]", status: 400 } 
-            }                 
+            }              
             if (municipality) {
                 let warningIdsFromMunicipality = await MapService.location.retrieve({ municipality })
 
