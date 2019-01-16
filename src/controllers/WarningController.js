@@ -45,7 +45,7 @@ module.exports = {
             if (excludeStatus) {
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    filters = instance => {
+                    filters = function(instance) {
                         console.log("awiudadasd", instance.dataValues)
                         return ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
                     }
@@ -63,7 +63,7 @@ module.exports = {
             }
             
 
-            const r = db.warning.findAll({
+            let r = db.warning.findAll({
                 offset, limit,
                 where,
                 include: [{
@@ -72,7 +72,10 @@ module.exports = {
                     order: [[ 'createdAt', 'DESC' ]],
                     limit: 1
                 }, { model: db.category }],
-            }).filter(statusFilter)
+            })
+            
+            if (statusFilter) r = r.filter(statusFilter)
+
             const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
             const locations = await MapService.location.retrieve({id__in: ids});
 
