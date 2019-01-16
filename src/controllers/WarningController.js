@@ -77,12 +77,7 @@ module.exports = {
             await locations.map(it => locationsObject[it.id] = it);
 
             return r.map(it => {
-                const warningFromDatabase = it.dataValues.filter(dataValues => {
-                    for(let i = 0; i < filters.length; i++) {
-                        if (filters[i](dataValues)) return false
-                    }
-                    return true
-                });
+                const warningFromDatabase = it.dataValues;
                 const location = locationsObject[warningFromDatabase.locationId];
                 delete warningFromDatabase['locationId'];
                 if (location)
@@ -90,7 +85,12 @@ module.exports = {
                 else
                     warningFromDatabase.location = null;
                 return warningFromDatabase;
-            })
+            }).filter(dataValues => {
+                for(let i = 0; i < filters.length; i++) {
+                    if (filters[i](dataValues)) return false
+                }
+                return true
+            });
         } catch (err) {
             console.error(err)
             throw err
