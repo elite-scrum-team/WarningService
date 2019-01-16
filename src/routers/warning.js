@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', addUserData, async (req, res) => {
-    const result = await WarningController.retrieve(req.body, req.query.internalUserId)
+    const result = await WarningController.retrieve(req.query, req.query.internalUserId)
     await res.send(result)
 })
 
