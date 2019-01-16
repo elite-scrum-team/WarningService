@@ -39,7 +39,7 @@ describe('User testing', () => {
         });
 
         it('returned value if when no category found', () => {
-            expect(result).to.eql({ error: 'no categories found', statusCode: 404 });
+            expect(result).to.eql(null);
         });
     });
 
