@@ -44,9 +44,10 @@ module.exports = {
             if (excludeStatus) {
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
+                    console.log(excludeStatus)
                     filters.push(dataValues => {
                         console.log(dataValues)
-                        return excludeStatus.includes(dataValues.statuses[0].type)
+                        return [...excludeStatus].includes(dataValues.statuses[0].type)
                     })
                 }
                 else
@@ -72,7 +73,12 @@ module.exports = {
                     order: [[ 'createdAt', 'DESC' ]],
                     limit: 1
                 }, { model: db.category }],
-            })
+            }).filter(dataValues => {
+                    for(let i = 0; i < filters.length; i++) {
+                        if (filters[i](dataValues)) return false
+                    }
+                    return true
+                })
             const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
             const locations = await MapService.location.retrieve({id__in: ids});
 
@@ -88,11 +94,6 @@ module.exports = {
                 else
                     warningFromDatabase.location = null;
                 return warningFromDatabase;
-            }).filter(dataValues => {
-                for(let i = 0; i < filters.length; i++) {
-                    if (filters[i](dataValues)) return false
-                }
-                return true
             });
         } catch (err) {
             console.error(err)
