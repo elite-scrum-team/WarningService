@@ -7,11 +7,11 @@ const sinon = require('sinon');
 const { makeMockModels } = require('sequelize-test-helpers');
 
 const mockModels = makeMockModels({
-  category: { findAll: sinon.stub() },
+    category: { findAll: sinon.stub() },
 });
 
 const save = proxyquire('../controllers/CategoryController', {
-  '../models': mockModels,
+    '../models': mockModels,
 });
 let result;
 
@@ -21,61 +21,61 @@ const arr = [fakeCategory, fakeCategory2];
 
 describe('User testing', () => {
 
-  const resetStubs = () => {
-    mockModels.category.findAll.resetHistory();
-    fakeCategory.dataValues.resetHistory();
-  };
+    const resetStubs = () => {
+        mockModels.category.findAll.resetHistory();
+        fakeCategory.dataValues.resetHistory();
+    };
 
-  context('testing retrive() when a category doesnt exist ', () => {
-    before(async () => {
-      mockModels.category.findAll.resolves(undefined);
-      result = await save.retrive();
+    context('testing retrive() when a category doesnt exist ', () => {
+        before(async () => {
+            mockModels.category.findAll.resolves(undefined);
+            result = await save.retrive();
+        });
+
+        after(resetStubs);
+
+        it('called category.retrieve()', () => {
+            expect(mockModels.category.findAll).to.have.been.called;
+        });
+
+        it('returned value if when no category found', () => {
+            expect(result).to.eql({ error: 'no categories found', statusCode: 404 });
+        });
     });
 
-    after(resetStubs);
+    context('testing retrieve() when only a single category exist', () => {
+        before(async () => {
+            mockModels.category.findAll.resolves(fakeCategory);
+            result = await save.retrive();
+        });
 
-    it('called category.retrieve()', () => {
-      expect(mockModels.category.findAll).to.have.been.called;
+        after(resetStubs);
+
+        it('called category.retrieve()', () => {
+            expect(mockModels.category.findAll).to.have.been.called;
+        });
+
+        it('returned the category', () => {
+            expect(result).to.deep.equal(fakeCategory.dataValues);
+        });
     });
 
-    it('returned value if when no category found', () => {
-      expect(result).to.eql({ error: 'no categories found', statusCode: 404 });
-    });
-  });
+    context('testing retrieve() when two categories exist', () => {
+        before(async () => {
+            mockModels.category.findAll.resolves(arr);
+            result = await save.retrive();
+        });
 
-  context('testing retrieve() when only a single category exist', () => {
-    before(async () => {
-      mockModels.category.findAll.resolves(fakeCategory);
-      result = await save.retrive();
-    });
+        after(resetStubs);
 
-    after(resetStubs);
+        it('called category.retrieve()', () => {
+            expect(mockModels.category.findAll).to.have.been.called;
+        });
 
-    it('called category.retrieve()', () => {
-      expect(mockModels.category.findAll).to.have.been.called;
-    });
-
-    it('returned the category', () => {
-      expect(result).to.deep.equal(fakeCategory.dataValues);
-    });
-  });
-
-  context('testing retrieve() when two categories exist', () => {
-    before(async () => {
-      mockModels.category.findAll.resolves(arr);
-      result = await save.retrive();
-    });
-
-    after(resetStubs);
-
-    it('called category.retrieve()', () => {
-      expect(mockModels.category.findAll).to.have.been.called;
-    });
-
-    it('returned the category', () => {
-      expect(result).to.include.members(
-        [fakeCategory.dataValues, fakeCategory2.dataValues]
-      );
-    });
-  })
+        it('returned the category', () => {
+            expect(result).to.include.members(
+                [fakeCategory.dataValues, fakeCategory2.dataValues]
+            );
+        });
+    })
 });
