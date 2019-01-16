@@ -1,6 +1,8 @@
 const db = require('../models');
 const MapService = require('../services/MapService');
 
+const flatten = require('../util/flatten')
+
 module.exports = {
     async create({ description, location, categoryId }, userId) {
         const instance = {
@@ -24,16 +26,15 @@ module.exports = {
         } catch(err) {
             console.error(err);
             throw err;
-        }    
-    },   
+        }
+    },
 
-    async retrieve(filters, userId) {
+    async retrieve({ offset, limit }, userId) {
         // TODO: userId logic
-        const { offset, limit } = filters
         try {
-            const r = db.warning.findAll({ 
-                offset, limit, 
-                include: [{ 
+            const r = db.warning.findAll({
+                offset, limit,
+                include: [{
                     model: db.status,
                     separate: true,
                     order: [[ 'createdAt', 'DESC' ]],
@@ -42,7 +43,7 @@ module.exports = {
             })
             const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
             const locations = await MapService.location.retrieve({id__in: ids});
-             
+
             const locationsObject = {};
             await locations.map(it => locationsObject[it.id] = it);
 
@@ -63,17 +64,37 @@ module.exports = {
     },
 
     async retriveOne(id) {
-        const instance = (await db.warning.findByPk(id, { 
-            include: [{ all: true }],
-            order: [
-                [db.status, 'createdAt', 'DESC']
-            ]
+        const instance = (await db.warning.findByPk(id, {
+            include: [{
+                model: db.status,
+                separate: true,
+                order: [[ 'createdAt', 'DESC' ]],
+                limit: 1
+            }, { model: db.category }, { model: db.image }],
         })).dataValues;
         const location = await MapService.location.retrieveOne(instance.locationId);
         delete instance['locationId'];
         instance.location = location;
-        return instance; 
-    
+        return instance;
+
+    },
+
+    async retrieveContent(id) {
+        const instance = await db.warning.findByPk(id, {
+            include: [{ all: true }]
+        })
+        if(!instance) return db.sequelize.Promise.reject("Instance failed")
+        const content = Object.entries(instance.toJSON())
+            .filter(([k, v]) => v instanceof Array && k !== 'Images')
+            .map(([k, v]) => v.map(it => ({ type: k, data: it })))
+
+        const flatContent = flatten(content)
+
+        const sortedFlatContent =
+            flatContent
+                .sort((a, b) => new Date(b.data.createdAt) - new Date(a.data.createdAt))
+
+        return sortedFlatContent
     },
 
 

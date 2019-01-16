@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/elite-scrum-team/WarningService#readme",
   "dependencies": {
-    "@igorivaniuk/multer-google-storage": "^1.0.2",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
