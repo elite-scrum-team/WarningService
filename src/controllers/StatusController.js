@@ -10,7 +10,7 @@ module.exports = {
             type, description, warningId, userId
         };
         try {
-            const result = await db.sequelize.transaction(async _ => {
+            const result = db.sequelize.transaction(async _ => {
                 const statusInstance = await db.status.create(instance)
                 await db.warning.update({
                     latestStatusType: type
