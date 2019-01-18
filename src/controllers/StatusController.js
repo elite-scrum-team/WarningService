@@ -1,11 +1,12 @@
 const db = require('../models');
 
 module.exports = {
-
     async create({ type, description, warningId }, userId) {
-
         const instance = {
-            type, description, warningId, userId
+            type,
+            description,
+            warningId,
+            userId,
         };
         try {
             const result = await db.sequelize.transaction(async _ => {
@@ -13,15 +14,15 @@ module.exports = {
                 console.log(statusInstance);
                 const warning = await db.warning.findByPk(warningId);
                 await warning.update({
-                    latestStatusType: type
+                    latestStatusType: type,
                 });
-                return statusInstance
+                return statusInstance;
             });
-            console.log(result)
+            console.log(result);
             return result.dataValues;
         } catch (err) {
             console.error(err);
             throw err;
         }
-    }
+    },
 };

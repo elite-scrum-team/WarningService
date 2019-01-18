@@ -7,9 +7,14 @@ if (!process.env.MAP_SERVICE_SERVICE_HOST) {
 module.exports = {
     location: {
         async create(location) {
-            const r = await services.fetch.post('map', 'location', {}, {
-                location: location,
-            });
+            const r = await services.fetch.post(
+                'map',
+                'location',
+                {},
+                {
+                    location: location,
+                }
+            );
             return r.json();
         },
         async retrieveOne(id) {
@@ -19,7 +24,9 @@ module.exports = {
         async retrieve(filters) {
             const r = await services.fetch.get('map', 'location', filters);
             return r.json();
-        }
-    }
+        },
+    },
+};
+{
+    municipality: 'uuid';
 }
-{ municipality: "uuid" }

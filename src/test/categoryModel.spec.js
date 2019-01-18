@@ -17,8 +17,6 @@ describe('src/models/category', () => {
     checkModelName(Model)('category');
 
     context('properties', () => {
-        ['id', 'name'].forEach(
-          checkPropertyExists(instance)
-        );
+        ['id', 'name'].forEach(checkPropertyExists(instance));
     });
 });

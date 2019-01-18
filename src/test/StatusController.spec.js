@@ -4,7 +4,7 @@ chai.use(require('sinon-chai'));
 let expect = chai.expect;
 const sinon = require('sinon');
 const transactionMock = require('./__mock__/sequelize');
-const  res = require('./__mock__/res');
+const res = require('./__mock__/res');
 
 const { makeMockModels } = require('sequelize-test-helpers');
 
@@ -13,7 +13,7 @@ const resStub = sinon.stub(res, 'update');
 const mockModels = makeMockModels({
     status: { create: sinon.stub() },
     warning: { findByPk: sinon.stub() },
-    sequelize: transactionMock
+    sequelize: transactionMock,
 });
 
 const save = proxyquire('../controllers/StatusController', {
@@ -58,7 +58,8 @@ describe('Status testing', () => {
         });
 
         it('Checking if the object was created', () => {
-            expect(mockModels.status.create.firstCall.lastArg).to.not.be.undefined;
+            expect(mockModels.status.create.firstCall.lastArg).to.not.be
+                .undefined;
         });
 
         it('Check if the returned value is correct', () => {

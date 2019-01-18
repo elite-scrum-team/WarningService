@@ -5,9 +5,9 @@ module.exports = {
         try {
             const res = await db.category.findAll();
             return res.map(r => r.dataValues);
-        } catch(err) {
+        } catch (err) {
             console.error(err);
             throw err;
         }
-    }
+    },
 };

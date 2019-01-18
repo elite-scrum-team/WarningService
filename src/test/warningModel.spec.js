@@ -18,7 +18,7 @@ describe('src/models/warning', () => {
 
     context('properties', () => {
         ['id', 'description', 'userId', 'locationId'].forEach(
-          checkPropertyExists(instance)
+            checkPropertyExists(instance)
         );
     });
 });
