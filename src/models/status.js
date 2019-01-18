@@ -1,29 +1,33 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const Status = sequelize.define('status', {
-        id: {
-            primaryKey: true,
-            type: DataTypes.UUID,
-            defaultValue: Sequelize.UUIDV4
-        },
+    const Status = sequelize.define(
+        'status',
+        {
+            id: {
+                primaryKey: true,
+                type: DataTypes.UUID,
+                defaultValue: Sequelize.UUIDV4,
+            },
 
-        type: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
+            type: {
+                type: DataTypes.INTEGER,
+                defaultValue: 0,
+            },
 
-        description: {
-            type: DataTypes.STRING,
-            defaultValue: ""
-        },
+            description: {
+                type: DataTypes.STRING,
+                defaultValue: '',
+            },
 
-        userId: {
-            type: DataTypes.UUID
-        }
-    }, {})
+            userId: {
+                type: DataTypes.UUID,
+            },
+        },
+        {}
+    );
     Status.associate = models => {
-        Status.belongsTo(models.warning)
-    }
+        Status.belongsTo(models.warning);
+    };
     return Status;
-}
+};

@@ -1,11 +1,7 @@
 module.exports = {
-    reload(something) {
+    reload(something) {},
 
-    },
+    update(something) {},
 
-    update(something) {
-
-    },
-
-    dataValues: {}
+    dataValues: {},
 };

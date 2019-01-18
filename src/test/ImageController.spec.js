@@ -42,7 +42,8 @@ describe('Image testing', () => {
         });
 
         it('Checking if the object was created', () => {
-            expect(mockModels.image.create.firstCall.lastArg).to.not.be.undefined;
+            expect(mockModels.image.create.firstCall.lastArg).to.not.be
+                .undefined;
         });
 
         it('Check if the returned value is correct', () => {

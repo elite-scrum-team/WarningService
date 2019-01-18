@@ -10,19 +10,17 @@ const res = require('./__mock__/res');
 const sinonStubPromise = require('sinon-stub-promise');
 sinonStubPromise(sinon);
 
-
 const mapStub = sinon.stub(MapService.location, 'create').resolves('1');
 const resStub = sinon.stub(res, 'reload');
 
 const mapStubRetrieve = sinon.stub(MapService.location, 'retrieve');
-
 
 const { makeMockModels } = require('sequelize-test-helpers');
 
 const mockModels = makeMockModels({
     warning: {
         create: sinon.stub(),
-        findAll: sinon.stub()
+        findAll: sinon.stub(),
     },
     status: { create: sinon.stub() },
     sequelize: transactionMock,
@@ -36,13 +34,13 @@ let result;
 
 const fakeWarning = { dataValues: sinon.stub() };
 const fakeWarning2 = { dataValues: sinon.stub() };
-const arr = [ fakeWarning,  fakeWarning2];
+const arr = [fakeWarning, fakeWarning2];
 
 describe('Warning testing', () => {
     const warning = {
         description: 'test.link/for/test/purposes',
         location: '64.29438, -18.23048',
-        categoryId: '7357108'
+        categoryId: '7357108',
     };
 
     const userId = '73574538';
@@ -81,7 +79,8 @@ describe('Warning testing', () => {
         });
 
         it('Checking if the object was created', () => {
-            expect(mockModels.warning.create.firstCall.lastArg).to.not.be.undefined;
+            expect(mockModels.warning.create.firstCall.lastArg).to.not.be
+                .undefined;
         });
 
         it('Check if the returned value is correct', () => {
@@ -91,7 +90,7 @@ describe('Warning testing', () => {
 
     const retWar = {
         offset: 0,
-        limit: 10
+        limit: 10,
     };
 
     const resetStubsRetrieve = () => {
@@ -138,13 +137,13 @@ describe('Warning testing', () => {
     context('testing retrieve() when two categories exist', () => {
         before(async () => {
             mockModels.warning.findAll.returns(arr);
-            mapStubRetrieve.resolves([1,2]);
+            mapStubRetrieve.resolves([1, 2]);
             result = await save.retrieve(retWar, userId);
         });
 
-        after( () => {
+        after(() => {
             resetStubsRetrieve();
-            arr.map( fake => fake.dataValues.resetHistory());
+            arr.map(fake => fake.dataValues.resetHistory());
         });
 
         it('called category.retrieve()', () => {
@@ -152,9 +151,10 @@ describe('Warning testing', () => {
         });
 
         it('returned the category', () => {
-            expect(result).to.include.members(
-                [fakeWarning.dataValues, fakeWarning2.dataValues]
-            );
+            expect(result).to.include.members([
+                fakeWarning.dataValues,
+                fakeWarning2.dataValues,
+            ]);
         });
-    })
+    });
 });

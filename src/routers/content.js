@@ -1,23 +1,19 @@
+const WarningController = require('../controllers/WarningController');
 
-const WarningController = require('../controllers/WarningController')
-
-const router = require('express').Router()
-
-
+const router = require('express').Router();
 
 router.get('/:id', async (req, res) => {
     try {
-        const result = await WarningController.retrieveContent(req.params.id)
+        const result = await WarningController.retrieveContent(req.params.id);
         if (result) {
-            await res.send(result)
+            await res.send(result);
         } else {
-            await res.send({ error: 'Could not get content' }, 500)
+            await res.send({ error: 'Could not get content' }, 500);
         }
     } catch (err) {
-        console.log(err)
-        res.send({ err }, 500)
+        console.log(err);
+        res.send({ err }, 500);
     }
-})
+});
 
-
-module.exports = router
+module.exports = router;

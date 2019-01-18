@@ -18,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         latestStatusType: {
             type: DataTypes.INTEGER,
-            defaultValue: 0
-        }
+            defaultValue: 0,
+        },
     });
     Warning.associate = models => {
         Warning.belongsTo(models.category);
         Warning.hasMany(models.status);
         Warning.hasMany(models.image);
-        Warning.hasMany(models.contract)
-    }
+        Warning.hasMany(models.contract);
+    };
     return Warning;
 };
