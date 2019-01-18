@@ -213,4 +213,17 @@ module.exports = {
             throw err;
         }
     },
+
+    async delete(id, userId) {
+        try {
+            const res = await db.warning.findByPk(id)
+            if (res.latestStatusType === 0 && res.userId === userId) {
+                return await res.destroy()
+            }
+            return { error: "Unable to delete warning", status: 400 }
+        } catch (err) {
+            console.error(err)
+            throw err
+        }
+    }
 };

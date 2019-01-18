@@ -4,7 +4,7 @@ const WarningController = require('../controllers/WarningController');
 const router = require('express').Router();
 
 router.route('/').post(async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     // Check if user is allowed to add image
     const warningId = req.body.warningId;
     const fileURL = req.body.fileURL;
