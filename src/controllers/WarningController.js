@@ -31,11 +31,14 @@ module.exports = {
         }
     },
 
-    async retrieve({ offset, limit, excludeStatus, onlyStatus, useUserId = false, municipality }, userId) {
+    async retrieve({ offset, limit, excludeStatus, onlyStatus, useUserId = false, municipality, groupId }, userId) {
         // TODO: userId logic
         try {
             let where = {}
-            let statusFilter = null
+
+            let contractInclude = {
+                model: db.contract
+            }
 
             if (useUserId) {
                 if (userId) where.userId = userId
@@ -46,7 +49,9 @@ module.exports = {
                 if (!(onlyStatus instanceof Array)) onlyStatus = [Number.parseInt(onlyStatus)]
                 if (onlyStatus.length > 0) {
                     onlyStatus = onlyStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    statusFilter = (instance) => [...onlyStatus].includes(instance.dataValues.statuses[0].type)
+                    where.latestStatusType = {
+                        [Op.in]: onlyStatus
+                    }
                 }
             }
                 
@@ -54,18 +59,30 @@ module.exports = {
                 if (!(excludeStatus instanceof Array)) excludeStatus = [Number.parseInt(excludeStatus)]
                 if (excludeStatus.length > 0) {
                     excludeStatus = excludeStatus.map(it => it instanceof Number ? it : Number.parseInt(it))
-                    statusFilter = (instance) => ![...excludeStatus].includes(instance.dataValues.statuses[0].type)
+                    where.latestStatusType = {
+                        [Op.notIn]: excludeStatus
+                    }
                 }
-                else return { error: "No supported filters in exclude [status]", status: 400 } 
             }              
-            if (municipality) {
-                let warningIdsFromMunicipality = await MapService.location.retrieve({ municipality })
 
-                if (warningIdsFromMunicipality instanceof Array && warningIdsFromMunicipality.length > 0 && warningIdsFromMunicipality[0].id !== undefined) {
-                    warningIdsFromMunicipality = warningIdsFromMunicipality.map(it => it.id)
-                    where.locationId = { [Op.in]: warningIdsFromMunicipality }
+            if (municipality) {
+                let locationIdsFromMunicipality = await MapService.location.retrieve({ municipality })
+
+                if (locationIdsFromMunicipality instanceof Array && locationIdsFromMunicipality.length > 0 && locationIdsFromMunicipality[0].id !== undefined) {
+                    locationIdsFromMunicipality = locationIdsFromMunicipality.map(it => it.id)
+                    where.locationId = { [Op.in]: locationIdsFromMunicipality }
                 } else
                     return { error: "MapService failed fetching warningIds from municipality", status: 400 }
+            }
+
+            if (groupId && !municipality) {
+                if (!(groupId instanceof Array)) groupId = [Number.parseInt(groupId)]
+                if (groupId.length > 0) {
+                    groupId = groupId.map(it => it instanceof Number ? it : Number.parseInt(it))
+                    contractInclude.where = {
+                        groupId
+                    }
+                }
             }
             
 
@@ -76,12 +93,11 @@ module.exports = {
                     model: db.status,
                     separate: true,
                     order: [[ 'createdAt', 'DESC' ]],
-                    limit: 1
-                }, { model: db.category }],
+                    limit: 1,
+                    
+                }, { model: db.category }, { model: db.image }, contractInclude],
             })
             
-            if (statusFilter) r = r.filter(statusFilter)
-
             const ids = await r.map(it => it.dataValues.locationId).filter(it => it);
             const locations = await MapService.location.retrieve({id__in: ids});
 

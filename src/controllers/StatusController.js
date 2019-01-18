@@ -1,6 +1,6 @@
 const db = require('../models')
+const Op = require('sequelize').Op
 
-//db.status.sync({force: true})
 
 module.exports = {
 
@@ -10,7 +10,17 @@ module.exports = {
             type, description, warningId, userId
         };
         try {
-            const result = await db.status.create(instance);
+            const result = db.sequelize.transaction(async _ => {
+                const statusInstance = await db.status.create(instance)
+                await db.warning.update({
+                    latestStatusType: type
+                }, {
+                    where: {
+                        warningId
+                    }
+                })
+                return statusInstance
+            });
             return result.dataValues;
         } catch (err) {
             console.error(err);
