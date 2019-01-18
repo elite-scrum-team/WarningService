@@ -85,7 +85,7 @@ describe('Warning testing', () => {
         });
 
         it('Check if the returned value is correct', () => {
-            expect(result.dataValues).to.include({displayName:'stub'});
+            expect(result).to.eql(fakeWarning);
         });
     });
 
