@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         Warning.hasMany(models.status);
         Warning.hasMany(models.image);
         Warning.hasMany(models.contract);
+        Warning.hasMany(models.comment);
     };
     return Warning;
 };

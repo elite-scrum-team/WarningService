@@ -173,9 +173,10 @@ module.exports = {
                     order: [['createdAt', 'DESC']],
                     limit: 1,
                 },
+                { model: db.comment },
                 { model: db.category },
                 { model: db.image },
-                { model: db.contract }
+                { model: db.contract },
             ],
         })).dataValues;
         const location = await MapService.location.retrieveOne(
@@ -216,14 +217,14 @@ module.exports = {
 
     async delete(id, userId) {
         try {
-            const res = await db.warning.findByPk(id)
+            const res = await db.warning.findByPk(id);
             if (res.latestStatusType === 0 && res.userId === userId) {
-                return await res.destroy()
+                return await res.destroy();
             }
-            return { error: "Unable to delete warning", status: 400 }
+            return { error: 'Unable to delete warning', status: 400 };
         } catch (err) {
-            console.error(err)
-            throw err
+            console.error(err);
+            throw err;
         }
-    }
+    },
 };
