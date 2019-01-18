@@ -35,6 +35,7 @@ app.use('/api/v1/image', require('./routers/image'));
 app.use('/api/v1/content', require('./routers/content'));
 app.use('/api/v1/score', require('./routers/score'));
 app.use('/api/v1/contract', require('./routers/contract'));
+app.use('/api/v1/statistics', require('./routers/statistics'));
 
 app.get('/', async (req, res) => {
     await res.send({
