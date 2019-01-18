@@ -94,7 +94,6 @@ module.exports = {
                     separate: true,
                     order: [[ 'createdAt', 'DESC' ]],
                     limit: 1,
-                    
                 }, { model: db.category }, { model: db.image }, contractInclude],
             })
             
