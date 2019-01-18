@@ -1,6 +1,4 @@
-const db = require('../models')
-const Op = require('sequelize').Op
-
+const db = require('../models');
 
 module.exports = {
 
@@ -10,17 +8,16 @@ module.exports = {
             type, description, warningId, userId
         };
         try {
-            const result = db.sequelize.transaction(async _ => {
-                const statusInstance = await db.status.create(instance)
-                await db.warning.update({
+            const result = await db.sequelize.transaction(async _ => {
+                const statusInstance = await db.status.create(instance);
+                console.log(statusInstance);
+                const warning = await db.warning.findByPk(warningId);
+                await warning.update({
                     latestStatusType: type
-                }, {
-                    where: {
-                        warningId
-                    }
-                })
+                });
                 return statusInstance
             });
+            console.log(result)
             return result.dataValues;
         } catch (err) {
             console.error(err);

@@ -3,11 +3,17 @@ const chai = require('chai');
 chai.use(require('sinon-chai'));
 let expect = chai.expect;
 const sinon = require('sinon');
+const transactionMock = require('./__mock__/sequelize');
+const  res = require('./__mock__/res');
 
 const { makeMockModels } = require('sequelize-test-helpers');
 
+const resStub = sinon.stub(res, 'update');
+
 const mockModels = makeMockModels({
     status: { create: sinon.stub() },
+    warning: { findByPk: sinon.stub() },
+    sequelize: transactionMock
 });
 
 const save = proxyquire('../controllers/StatusController', {
@@ -29,12 +35,15 @@ describe('Status testing', () => {
 
     const resetStubs = () => {
         mockModels.status.create.resetHistory();
+        mockModels.warning.findByPk.resetHistory();
+        resStub.reset();
         fakeStatus.dataValues.resetHistory();
     };
 
     context('testing create() when data is given', () => {
         before(async () => {
             mockModels.status.create.resolves(fakeStatus);
+            mockModels.warning.findByPk.resolves(res);
             result = await save.create(status, userId);
         });
 
@@ -44,12 +53,16 @@ describe('Status testing', () => {
             expect(mockModels.status.create).to.have.been.called;
         });
 
+        it('called status.create()', () => {
+            expect(mockModels.warning.findByPk).to.have.been.called;
+        });
+
         it('Checking if the object was created', () => {
             expect(mockModels.status.create.firstCall.lastArg).to.not.be.undefined;
         });
 
         it('Check if the returned value is correct', () => {
-            expect(result).to.eql(fakeStatus.dataValues);
+            expect(result).to.eql(fakeStatus);
         });
     });
 });
