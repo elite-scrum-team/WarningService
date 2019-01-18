@@ -24,6 +24,16 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const result = await WarningController.delete(req.params.id, req.query.internalUserId)
+        await res.send(result)
+    } catch (err) {
+        console.error(err)
+        await res.status(500).send(err)
+    }
+})
+
 router.post('/', async (req, res) => {
     const instanceOrError = await WarningController.create(
         req.body,
