@@ -1,52 +1,53 @@
 {
-  "name": "warningService",
-  "version": "1.0.0",
-  "description": "service for Warnings",
-  "main": "server.js",
-  "scripts": {
-    "test": "mocha src/test/*.spec.js",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elite-scrum-team/WarningService.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/elite-scrum-team/WarningService/issues"
-  },
-  "homepage": "https://github.com/elite-scrum-team/WarningService#readme",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "dotenv": "^6.2.0",
-    "express": "^4.16.4",
-    "fs": "0.0.1-security",
-    "husky": "^1.3.1",
-    "morgan": "^1.9.1",
-    "mysql2": "^1.6.4",
-    "node-fetch": "^2.3.0",
-    "pretty-quick": "^1.10.0",
-    "prom-client": "^11.2.1",
-    "querystring": "^0.2.0",
-    "sequelize": "^4.42.0"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.9",
-    "proxyquire": "^2.1.0",
-    "sequelize-cli": "^5.4.0",
-    "sequelize-mock": "^0.10.2",
-    "sequelize-test-helpers": "^1.0.7",
-    "sinon": "^7.2.2",
-    "sinon-chai": "^3.3.0",
-    "sinon-stub-promise": "^4.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
+    "name": "warningService",
+    "version": "1.0.0",
+    "description": "service for Warnings",
+    "main": "server.js",
+    "scripts": {
+        "test": "mocha src/test/*.spec.js",
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elite-scrum-team/WarningService.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/elite-scrum-team/WarningService/issues"
+    },
+    "homepage": "https://github.com/elite-scrum-team/WarningService#readme",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "dotenv": "^6.2.0",
+        "express": "^4.16.4",
+        "fs": "0.0.1-security",
+        "husky": "^1.3.1",
+        "morgan": "^1.9.1",
+        "mysql2": "^1.6.4",
+        "node-fetch": "^2.3.0",
+        "prettier": "^1.15.3",
+        "pretty-quick": "^1.10.0",
+        "prom-client": "^11.2.1",
+        "querystring": "^0.2.0",
+        "sequelize": "^4.42.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^5.2.0",
+        "nodemon": "^1.18.9",
+        "proxyquire": "^2.1.0",
+        "sequelize-cli": "^5.4.0",
+        "sequelize-mock": "^0.10.2",
+        "sequelize-test-helpers": "^1.0.7",
+        "sinon": "^7.2.2",
+        "sinon-chai": "^3.3.0",
+        "sinon-stub-promise": "^4.0.0"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
     }
-  }
 }
