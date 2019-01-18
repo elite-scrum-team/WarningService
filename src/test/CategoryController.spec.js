@@ -17,9 +17,9 @@ let result;
 
 const fakeCategory = { dataValues: sinon.stub() };
 const fakeCategory2 = { dataValues: sinon.stub() };
-const arr = [fakeCategory, fakeCategory2];
+const arr = [ fakeCategory, fakeCategory2 ];
 
-describe('User testing', () => {
+describe('Category testing', () => {
 
     const resetStubs = () => {
         mockModels.category.findAll.resetHistory();
@@ -28,7 +28,7 @@ describe('User testing', () => {
 
     context('testing retrive() when a category doesnt exist ', () => {
         before(async () => {
-            mockModels.category.findAll.resolves(undefined);
+            mockModels.category.findAll.resolves([]);
             result = await save.retrive();
         });
 
@@ -39,13 +39,13 @@ describe('User testing', () => {
         });
 
         it('returned value if when no category found', () => {
-            expect(result).to.eql(null);
+            expect(result).to.eql([]);
         });
     });
 
     context('testing retrieve() when only a single category exist', () => {
         before(async () => {
-            mockModels.category.findAll.resolves(fakeCategory);
+            mockModels.category.findAll.resolves([fakeCategory]);
             result = await save.retrive();
         });
 
@@ -56,7 +56,7 @@ describe('User testing', () => {
         });
 
         it('returned the category', () => {
-            expect(result).to.deep.equal(fakeCategory.dataValues);
+            expect(result).to.eql([fakeCategory.dataValues]);
         });
     });
 
@@ -67,7 +67,7 @@ describe('User testing', () => {
         });
 
         after( () => {
-            resetStubs;
+            resetStubs();
             arr.map( fake => fake.dataValues.resetHistory());
         });
 

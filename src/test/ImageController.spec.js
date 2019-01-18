@@ -18,7 +18,7 @@ let result;
 
 const fakeImage = { dataValues: sinon.stub() };
 
-describe('User testing', () => {
+describe('Image testing', () => {
     const image = {
         warningId: '7357',
         fileURL: 'test.link/for/test/purposes',
@@ -32,7 +32,6 @@ describe('User testing', () => {
     context('testing create() when data is given', () => {
         before(async () => {
             mockModels.image.create.resolves(fakeImage);
-            console.log(image.fileURL);
             result = await save.create(image);
         });
 

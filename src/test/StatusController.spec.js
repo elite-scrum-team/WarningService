@@ -18,13 +18,14 @@ let result;
 
 const fakeStatus = { dataValues: sinon.stub() };
 
-describe('User testing', () => {
+describe('Status testing', () => {
     const status = {
         type: 'unreviewed',
         description: 'A test status',
         warningId: '7357',
-        userId: '73574538'
     };
+
+    const userId = '73574538';
 
     const resetStubs = () => {
         mockModels.status.create.resetHistory();
@@ -34,7 +35,7 @@ describe('User testing', () => {
     context('testing create() when data is given', () => {
         before(async () => {
             mockModels.status.create.resolves(fakeStatus);
-            result = await save.create(status.type, status.description, status.warningId, status.userId);
+            result = await save.create(status, userId);
         });
 
         after(resetStubs);
