@@ -45,6 +45,7 @@ module.exports = {
             useUserId = false,
             municipality,
             groupId,
+            positions, // Location ids
         },
         userId
     ) {
@@ -56,11 +57,13 @@ module.exports = {
                 model: db.contract,
             };
 
+            // UserId filter
             if (useUserId) {
                 if (userId) where.userId = userId;
                 else return { error: 'No userId received', status: 400 };
             }
 
+            // OnlyStatus filter
             if (onlyStatus) {
                 if (!(onlyStatus instanceof Array))
                     onlyStatus = [Number.parseInt(onlyStatus)];
@@ -74,6 +77,7 @@ module.exports = {
                 }
             }
 
+            // ExcludeStatus filter
             if (excludeStatus && !onlyStatus) {
                 if (!(excludeStatus instanceof Array))
                     excludeStatus = [Number.parseInt(excludeStatus)];
@@ -87,6 +91,7 @@ module.exports = {
                 }
             }
 
+            // Municipality filter
             if (municipality) {
                 let locationIdsFromMunicipality = await MapService.location.retrieve(
                     { municipality }
@@ -109,6 +114,7 @@ module.exports = {
                     };
             }
 
+            // GroupID filter
             if (groupId && !municipality) {
                 if (!(groupId instanceof Array))
                     groupId = [Number.parseInt(groupId)];
@@ -118,6 +124,18 @@ module.exports = {
                     );
                     contractInclude.where = {
                         groupId,
+                    };
+                }
+            }
+
+            // Location Id filter
+            if (positions) {
+                if (!(positions instanceof Array)) {
+                    positions = [positions];
+                }
+                if (positions.length > 0) {
+                    where.locationId = {
+                        [Op.in]: positions,
                     };
                 }
             }
