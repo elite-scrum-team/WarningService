@@ -1,11 +1,11 @@
 const db = require('../models');
 
 module.exports = {
-    async create(warningId, body, userId) {
+    async create(warningId, content, userId) {
         try {
             const instance = await db.comment.create({
                 warningId,
-                body,
+                content,
                 userId,
             });
             return instance;
