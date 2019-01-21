@@ -17,8 +17,6 @@ describe('src/models/image', () => {
     checkModelName(Model)('image');
 
     context('properties', () => {
-        ['id', 'fileURL'].forEach(
-            checkPropertyExists(instance)
-        );
+        ['id', 'fileURL'].forEach(checkPropertyExists(instance));
     });
 });

@@ -1,4 +1,3 @@
-
 const express = require('express');
 
 const WarningController = require('../controllers/WarningController');
@@ -17,24 +16,39 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    const result = await WarningController.update(req.params.id, req.body)
-    if (result) { 
-        await res.send(result)
+    const result = await WarningController.update(req.params.id, req.body);
+    if (result) {
+        await res.send(result);
     } else {
-        await res.send({ error: 'Could not update warning' }, 500)
+        await res.send({ error: 'Could not update warning' }, 500);
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const result = await WarningController.delete(req.params.id, req.query.internalUserId)
+        await res.send(result)
+    } catch (err) {
+        console.error(err)
+        await res.status(500).send(err)
     }
 })
 
-
 router.post('/', async (req, res) => {
-    const instanceOrError = await WarningController.create(req.body, req.query.internalUserId);
-    await res.send(instanceOrError);    
+    const instanceOrError = await WarningController.create(
+        req.body,
+        req.query.internalUserId
+    );
+    await res.send(instanceOrError);
 });
 
 router.get('/', addUserData, async (req, res) => {
     console.log(req.query);
-    const result = await WarningController.retrieve(req.query, req.query.internalUserId)
-    await res.send(result)
-})
+    const result = await WarningController.retrieve(
+        req.query,
+        req.query.internalUserId
+    );
+    await res.send(result);
+});
 
 module.exports = router;

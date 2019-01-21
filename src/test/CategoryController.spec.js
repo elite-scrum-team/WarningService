@@ -17,10 +17,9 @@ let result;
 
 const fakeCategory = { dataValues: sinon.stub() };
 const fakeCategory2 = { dataValues: sinon.stub() };
-const arr = [ fakeCategory, fakeCategory2 ];
+const arr = [fakeCategory, fakeCategory2];
 
 describe('Category testing', () => {
-
     const resetStubs = () => {
         mockModels.category.findAll.resetHistory();
         fakeCategory.dataValues.resetHistory();
@@ -66,9 +65,9 @@ describe('Category testing', () => {
             result = await save.retrive();
         });
 
-        after( () => {
+        after(() => {
             resetStubs();
-            arr.map( fake => fake.dataValues.resetHistory());
+            arr.map(fake => fake.dataValues.resetHistory());
         });
 
         it('called category.retrieve()', () => {
@@ -76,9 +75,10 @@ describe('Category testing', () => {
         });
 
         it('returned the category', () => {
-            expect(result).to.include.members(
-                [fakeCategory.dataValues, fakeCategory2.dataValues]
-            );
+            expect(result).to.include.members([
+                fakeCategory.dataValues,
+                fakeCategory2.dataValues,
+            ]);
         });
-    })
+    });
 });

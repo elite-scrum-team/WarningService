@@ -1,15 +1,20 @@
 const services = require('../util/services');
 
 if (!process.env.MAP_SERVICE_SERVICE_HOST) {
-    process.env['MAP_SERVICE_SERVICE_HOST'] = '35.228.85.132';
+    process.env['MAP_SERVICE_SERVICE_HOST'] = '35.228.20.102';
 }
 
 module.exports = {
     location: {
         async create(location) {
-            const r = await services.fetch.post('map', 'location', {}, {
-                location: location,
-            });
+            const r = await services.fetch.post(
+                'map',
+                'location',
+                {},
+                {
+                    location: location,
+                }
+            );
             return r.json();
         },
         async retrieveOne(id) {
@@ -19,7 +24,9 @@ module.exports = {
         async retrieve(filters) {
             const r = await services.fetch.get('map', 'location', filters);
             return r.json();
-        }
-    }
+        },
+    },
+};
+{
+    municipality: 'uuid';
 }
-{ municipality: "uuid" }

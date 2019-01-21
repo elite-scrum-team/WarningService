@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const Status = sequelize.define(
-        'status',
+    const Comment = sequelize.define(
+        'comment',
         {
             id: {
                 primaryKey: true,
@@ -10,12 +10,7 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: Sequelize.UUIDV4,
             },
 
-            type: {
-                type: DataTypes.INTEGER,
-                defaultValue: 0,
-            },
-
-            description: {
+            content: {
                 type: DataTypes.STRING,
                 defaultValue: '',
             },
@@ -26,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         {}
     );
-    Status.associate = models => {
-        Status.belongsTo(models.warning);
+    Comment.associate = models => {
+        Comment.belongsTo(models.warning);
     };
-    return Status;
+    return Comment;
 };

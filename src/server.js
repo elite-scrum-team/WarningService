@@ -1,4 +1,3 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -7,13 +6,12 @@ require('dotenv').config();
 
 const db = require('./models');
 
-db.sequelize.sync({ alter: true })
-.then(() => {
-    db.category.findOrCreate({where: {name: 'Hull i vei'}, defaults: {}});
-})
+db.sequelize.sync({ alter: true }).then(() => {
+    db.category.findOrCreate({ where: { name: 'Hull i vei' }, defaults: {} });
+});
 
 const app = express();
-const port = process.env.port || 4000;  
+const port = process.env.port || 4000;
 
 // middleware
 app.use(bodyParser.json());
@@ -26,23 +24,24 @@ app.get('/metrics', async (req, res) => {
     await res.end(client.register.metrics());
 });
 
-
-
 // Logging
 app.use(morgan('dev'));
 
 // routers
 app.use('/api/v1/warning', require('./routers/warning'));
 app.use('/api/v1/category', require('./routers/category'));
-app.use('/api/v1/status', require('./routers/status'))
-app.use('/api/v1/image', require('./routers/image'))
-app.use('/api/v1/content', require('./routers/content'))
+app.use('/api/v1/status', require('./routers/status'));
+app.use('/api/v1/image', require('./routers/image'));
+app.use('/api/v1/content', require('./routers/content'));
+app.use('/api/v1/score', require('./routers/score'));
+app.use('/api/v1/contract', require('./routers/contract'));
+app.use('/api/v1/statistics', require('./routers/statistics'));
+app.use('/api/v1/comment', require('./routers/comment'));
 
 app.get('/', async (req, res) => {
     await res.send({
-        message: 'hello world!'
+        message: 'hello world!',
     });
 });
 
-app.listen(port, () => console.log(`listening on port ${port}`))
-
+app.listen(port, () => console.log(`listening on port ${port}`));

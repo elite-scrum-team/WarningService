@@ -1,4 +1,3 @@
-
 const express = require('express');
 
 const CategoryController = require('../controllers/CategoryController');
@@ -12,5 +11,3 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
-
-

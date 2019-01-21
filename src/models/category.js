@@ -1,4 +1,3 @@
-
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -10,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.TEXT,
-        }
+        },
     });
     return Category;
-}
+};

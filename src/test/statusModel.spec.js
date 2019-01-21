@@ -18,7 +18,7 @@ describe('src/models/status', () => {
 
     context('properties', () => {
         ['id', 'type', 'description', 'userId'].forEach(
-          checkPropertyExists(instance)
+            checkPropertyExists(instance)
         );
     });
 });
