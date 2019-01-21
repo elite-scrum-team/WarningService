@@ -49,13 +49,14 @@ module.exports = {
             municipality,
             groupId,
             positions, // Location ids
+            dateSort,
         },
         userId
     ) {
         // TODO: userId logic
         try {
             let where = {};
-
+            let order = [];
             let contractInclude = {
                 model: db.contract,
             };
@@ -143,6 +144,13 @@ module.exports = {
                 }
             }
 
+            // Sort by date (dateSort)
+            if (dateSort) {
+                if (dateSort === 'DESC' || dateSort === 'ASC') {
+                    order.push(['createdAt', dateSort]);
+                }
+            }
+
             let r = await db.warning.findAll({
                 offset,
                 limit,
@@ -158,6 +166,7 @@ module.exports = {
                     { model: db.image },
                     contractInclude,
                 ],
+                order,
             });
 
             const ids = await r
