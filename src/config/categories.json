@@ -1,0 +1,9 @@
+[
+  { "name": "Vei, fortau eller gåsti", "status": "valid" },
+  { "name": "Trær, busker og annet grønt", "status": "valid" },
+  { "name": "Belysning", "status": "valid" },
+  { "name": "Kjøretøy", "status": "valid" },
+  { "name": "Søppel", "status": "valid" },
+  { "name": "Helsefarer", "status": "valid" },
+  { "name": "Andre skader/mangler", "status": "valid" }
+]
