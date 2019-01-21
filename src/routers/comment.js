@@ -5,10 +5,11 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { warningId, content } = req.body;
+    const { warningId, content, fileURL } = req.body;
     const comment = await CommentController.create(
         warningId,
         content,
+        fileURL,
         req.query.internalUserId
     );
     if (comment) {

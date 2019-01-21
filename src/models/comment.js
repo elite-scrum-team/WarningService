@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
             userId: {
                 type: DataTypes.UUID,
             },
+
+            fileURL: {
+                type: DataTypes.TEXT,
+            },
         },
         {}
     );
