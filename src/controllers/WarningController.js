@@ -1,9 +1,12 @@
 const db = require('../models');
 const MapService = require('../services/MapService');
+const UserService = require('../services/UserService');
 
 const Op = require('sequelize').Op;
 
 const flatten = require('../util/flatten');
+
+const asyncForEach = require('../util/asyncForEach')
 
 module.exports = {
     async create({ description, location, categoryId }, userId) {
@@ -210,6 +213,13 @@ module.exports = {
             include: [{ all: true }],
         });
         if (!instance) return db.sequelize.Promise.reject('Instance failed');
+
+        // Add company names to contract
+        await asyncForEach(instance.dataValues.contracts, (it) => {
+            it.name = (await UserService.retrieveOneGroup(it.id)).name
+        })
+
+        // Map sequelize output to frontend mess
         const content = Object.entries(instance.toJSON())
             .filter(([k, v]) => v instanceof Array && k !== 'Images')
             .map(([k, v]) => v.map(it => ({ type: k, data: it })));
