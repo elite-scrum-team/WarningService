@@ -8,7 +8,7 @@ const  res = require('./__mock__/res');
 
 const { makeMockModels } = require('sequelize-test-helpers');
 
-const resStub = sinon.stub(res, 'update');
+let resStub;
 
 const mockModels = makeMockModels({
     status: { create: sinon.stub() },
@@ -36,18 +36,21 @@ describe('Status testing', () => {
     const resetStubs = () => {
         mockModels.status.create.resetHistory();
         mockModels.warning.findByPk.resetHistory();
-        resStub.reset();
         fakeStatus.dataValues.resetHistory();
     };
 
     context('testing create() when data is given', () => {
         before(async () => {
+            resStub = sinon.stub(res, 'update');
             mockModels.status.create.resolves(fakeStatus);
             mockModels.warning.findByPk.resolves(res);
             result = await save.create(status, userId);
         });
 
-        after(resetStubs);
+        after( () => {
+            resetStubs();
+            resStub.restore();
+        });
 
         it('called status.create()', () => {
             expect(mockModels.status.create).to.have.been.called;

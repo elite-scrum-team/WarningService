@@ -11,18 +11,24 @@ const sinonStubPromise = require('sinon-stub-promise');
 sinonStubPromise(sinon);
 
 
-const mapStub = sinon.stub(MapService.location, 'create').resolves('1');
+const mapStub = sinon.stub(MapService.location, 'create');
 const resStub = sinon.stub(res, 'reload');
 
 const mapStubRetrieve = sinon.stub(MapService.location, 'retrieve');
 
+const mapStubRetrieveOne = sinon.stub(MapService.location, 'retrieveOne');
+
+const resStubToJSON = sinon.stub(res, 'toJSON');
+
+let resStubUpdate;
 
 const { makeMockModels } = require('sequelize-test-helpers');
 
 const mockModels = makeMockModels({
     warning: {
         create: sinon.stub(),
-        findAll: sinon.stub()
+        findAll: sinon.stub(),
+        findByPk: sinon.stub(),
     },
     status: { create: sinon.stub() },
     sequelize: transactionMock,
@@ -50,19 +56,18 @@ describe('Warning testing', () => {
     const resetStubsCreate = () => {
         mockModels.warning.create.resetHistory();
         fakeWarning.dataValues.resetHistory();
+        mapStub.reset();
+        resStub.reset();
     };
 
-    context('testing create() when data is given', () => {
+    context('testing create()', () => {
         before(async () => {
+            mapStub.resolves('1');
             mockModels.warning.create.resolves(fakeWarning);
             result = await save.create(warning, userId);
         });
 
-        after(() => {
-            resetStubsCreate();
-            mapStub.reset();
-            resStub.reset();
-        });
+        after(resetStubsCreate);
 
         it('called warning.create()', () => {
             expect(mockModels.warning.create).to.have.been.called;
@@ -72,7 +77,7 @@ describe('Warning testing', () => {
             expect(mockModels.status.create).to.have.been.called;
         });
 
-        it('called status.create()', () => {
+        it('called Mapservice.location.create()', () => {
             expect(mapStub).to.have.been.called;
         });
 
@@ -95,7 +100,8 @@ describe('Warning testing', () => {
     };
 
     const resetStubsRetrieve = () => {
-        mockModels.warning.create.resetHistory();
+        mockModels.warning.findAll.resetHistory();
+        mapStubRetrieve.reset();
         fakeWarning.dataValues.resetHistory();
     };
 
@@ -110,6 +116,10 @@ describe('Warning testing', () => {
 
         it('called category.retrieve()', () => {
             expect(mockModels.warning.findAll).to.have.been.called;
+        });
+
+        it('called Mapservice.location.create()', () => {
+            expect(mapStubRetrieve).to.have.been.called;
         });
 
         it('returned value if when no category found', () => {
@@ -130,7 +140,11 @@ describe('Warning testing', () => {
             expect(mockModels.warning.findAll).to.have.been.called;
         });
 
-        it('returned the category', () => {
+        it('called Mapservice.location.create()', () => {
+            expect(mapStubRetrieve).to.have.been.called;
+        });
+
+        it('Check if the returned value is correct', () => {
             expect(result).to.eql([fakeWarning.dataValues]);
         });
     });
@@ -151,10 +165,114 @@ describe('Warning testing', () => {
             expect(mockModels.warning.findAll).to.have.been.called;
         });
 
-        it('returned the category', () => {
+        it('called Mapservice.location.create()', () => {
+            expect(mapStubRetrieve).to.have.been.called;
+        });
+
+        it('Check if the returned value is correct', () => {
             expect(result).to.include.members(
                 [fakeWarning.dataValues, fakeWarning2.dataValues]
             );
         });
-    })
+    });
+
+    const id = '7357';
+
+    const resetStubsRetrieveOne = () => {
+        mockModels.warning.findByPk.resetHistory();
+        mapStubRetrieveOne.reset();
+        fakeWarning.dataValues.resetHistory();
+    };
+
+    context('testing retrieveOne()', () => {
+        before(async () => {
+            mockModels.warning.findByPk.resolves(fakeWarning);
+            mapStubRetrieveOne.resolves('7357108');
+            result = await save.retriveOne(id);
+        });
+
+        after(resetStubsRetrieveOne);
+
+        it('called warning.findByPK()', () => {
+            expect(mockModels.warning.findByPk).to.have.been.called;
+        });
+
+        it('called Mapservice.location.retrieveOne()', () => {
+            expect(mapStubRetrieveOne).to.have.been.called;
+        });
+
+        it('Check if the returned value is correct', () => {
+            expect(result).to.eql(fakeWarning.dataValues);
+        });
+    });
+
+    const resetStubsRetrieveContent = () => {
+        mockModels.warning.findByPk.resetHistory();
+        fakeWarning.dataValues.resetHistory();
+        resStubToJSON.reset();
+    };
+
+    context('testing retrieveContent with null', () => {
+        before(async () => {
+            mockModels.warning.findByPk.resolves(null);
+            result = await save.retrieveContent(null);
+        });
+
+        after(resetStubsRetrieveContent);
+
+        it('called warning.findByPK()', () => {
+            expect(mockModels.warning.findByPk).to.have.been.called;
+        });
+
+        it('Check if the returned value is correct', () => {
+            expect(result).to.eql('Instance failed');
+        });
+    });
+
+    context('testing retrieveContent', () => {
+        before(async () => {
+            mockModels.warning.findByPk.resolves(res);
+            resStubToJSON.returns(fakeWarning.dataValues);
+            result = await save.retrieveContent(id);
+        });
+
+        after(resetStubsRetrieveContent);
+
+        it('called warning.findByPK()', () => {
+            expect(mockModels.warning.findByPk).to.have.been.called;
+        });
+
+        it('called res.toJSON()', () => {
+            expect(resStubToJSON).to.have.been.called;
+        });
+
+        it('Check if the returned value is correct', () => {
+            expect(result).to.eql([]);
+        });
+    });
+
+    const resetStubsUpdate = () => {
+        mockModels.warning.findByPk.resetHistory();
+        fakeWarning.dataValues.resetHistory();
+    };
+
+    const value = {value: 'test'};
+
+    context('testing update', () => {
+        before(async () => {
+            resStubUpdate = sinon.stub(res, 'update');
+            mockModels.warning.findByPk.resolves(res);
+            resStubUpdate.resolves('updated');
+            result = await save.update(id, value);
+        });
+
+        after(() => {
+            resetStubsUpdate();
+            resStubUpdate.restore();
+        });
+
+        it('Check if the returned value is correct', () => {
+            expect(result).to.eql('updated');
+        })
+    });
 });
