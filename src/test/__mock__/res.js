@@ -3,5 +3,7 @@ module.exports = {
 
     update(something) {},
 
-    dataValues: {},
+    toJSON() {},
+
+    dataValues: {}
 };
