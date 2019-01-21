@@ -5,4 +5,10 @@ module.exports = {
         res.dataValues = await Function();
         return res;
     },
+
+    Promise: {
+        reject() {
+            return 'Instance failed';
+        }
+    }
 };
