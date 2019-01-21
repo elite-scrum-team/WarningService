@@ -129,7 +129,7 @@ module.exports = {
             }
 
             // Location Id filter
-            if (positions) {
+            if (positions && !groupId && !municipality) {
                 if (!(positions instanceof Array)) {
                     positions = [positions];
                 }
