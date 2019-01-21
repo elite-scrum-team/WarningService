@@ -6,7 +6,7 @@ const Op = require('sequelize').Op;
 
 const flatten = require('../util/flatten');
 
-const asyncForEach = require('../util/asyncForEach')
+const asyncForEach = require('../util/asyncForEach');
 
 module.exports = {
     async create({ description, location, categoryId }, userId) {
@@ -215,9 +215,10 @@ module.exports = {
         if (!instance) return db.sequelize.Promise.reject('Instance failed');
 
         // Add company names to contract
-        await asyncForEach(instance.dataValues.contracts, (it) => {
-            it.name = (await UserService.retrieveOneGroup(it.id)).name
-        })
+        await asyncForEach(instance.dataValues.contracts, async it => {
+            const r = await UserService.retrieveOneGroup(it.id);
+            it.name = r.name;
+        });
 
         // Map sequelize output to frontend mess
         const content = Object.entries(instance.toJSON())
