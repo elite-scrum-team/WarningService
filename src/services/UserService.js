@@ -10,4 +10,8 @@ module.exports = {
     async retriveOne(id) {
         return await services.fetch.get('user', `user/${id}`, {});
     },
+
+    async retrieveOneGroup(id) {
+        return await services.fetch.get('user', `group/${id}`, {})
+    }
 };
