@@ -7,7 +7,10 @@ const addUserData = require('../middleware/user');
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {
-    const r = await WarningController.retriveOne(req.params.id);
+    const r = await WarningController.retriveOne(
+        req.params.id,
+        req.query.internalUserId
+    );
     if (r) {
         await res.send(r);
     } else {
@@ -26,13 +29,16 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        const result = await WarningController.delete(req.params.id, req.query.internalUserId)
-        await res.send(result)
+        const result = await WarningController.delete(
+            req.params.id,
+            req.query.internalUserId
+        );
+        await res.send(result);
     } catch (err) {
-        console.error(err)
-        await res.status(500).send(err)
+        console.error(err);
+        await res.status(500).send(err);
     }
-})
+});
 
 router.post('/', async (req, res) => {
     const instanceOrError = await WarningController.create(

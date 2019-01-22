@@ -1,6 +1,7 @@
 const db = require('../models');
 const MapService = require('../services/MapService');
 const UserService = require('../services/UserService');
+const InterestGroupService = require('../services/InterestGroupService');
 
 const Op = require('sequelize').Op;
 
@@ -186,7 +187,7 @@ module.exports = {
         }
     },
 
-    async retriveOne(id) {
+    async retriveOne(id, userId) {
         const instance = (await db.warning.findByPk(id, {
             include: [
                 {
@@ -201,11 +202,21 @@ module.exports = {
                 { model: db.contract },
             ],
         })).dataValues;
+        // Fetch location info for instance
         const location = await MapService.location.retrieveOne(
             instance.locationId
         );
         delete instance['locationId'];
         instance.location = location;
+
+        // Fetch subscribed info for instance
+        let isSubscribed = false;
+        if (userId) {
+            let userInfo = await InterestGroupService.userInfo(userId);
+            if (!userInfo.isError) isSubscribed = true;
+        }
+        instance.isSubscribed = isSubscribed;
+
         return instance;
     },
 
