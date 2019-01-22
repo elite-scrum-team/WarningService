@@ -10,4 +10,28 @@ module.exports = {
             throw err;
         }
     },
+
+    async create(name) {
+        try {
+            const res = await db.category.create({ name });
+            return res;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    },
+
+    async delete(commentId) {
+        try {
+            const res = await db.category.destroy({
+                where: {
+                    id: commentId,
+                },
+            });
+            return res;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    },
 };
