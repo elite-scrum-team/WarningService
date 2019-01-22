@@ -53,7 +53,6 @@ module.exports = {
         },
         userId
     ) {
-        // TODO: userId logic
         try {
             let where = {};
             let order = [];
@@ -120,16 +119,9 @@ module.exports = {
 
             // GroupID filter
             if (groupId && !municipality) {
-                if (!(groupId instanceof Array))
-                    groupId = [Number.parseInt(groupId)];
-                if (groupId.length > 0) {
-                    groupId = groupId.map(it =>
-                        it instanceof Number ? it : Number.parseInt(it)
-                    );
-                    contractInclude.where = {
-                        groupId,
-                    };
-                }
+                contractInclude.where = {
+                    groupId,
+                };
             }
 
             // Location Id filter
