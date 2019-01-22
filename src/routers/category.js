@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const r = await CategoryController.delete(req.params.id);
-    await res.status(r.status);
+    await res.status(r.status).send();
 });
 
 module.exports = router;
