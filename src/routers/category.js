@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const r = await CategoryController.create(req.body.name);
     console.log(r);
-    await res.send(await r.json(), r.status);
+    await res.send(r, r.status);
 });
 
 router.delete('/:id', async (req, res) => {
