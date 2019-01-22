@@ -213,6 +213,8 @@ module.exports = {
         let isSubscribed = false;
         if (userId) {
             let userInfo = await InterestGroupService.userInfo(userId);
+            console.log(userInfo);
+            console.log(await userInfo.json());
             if (!userInfo.isError) isSubscribed = true;
         }
         instance.isSubscribed = isSubscribed;
