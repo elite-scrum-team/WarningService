@@ -10,6 +10,11 @@ router.get('/', async (req, res) => {
     await res.send(r);
 });
 
+router.get('/:id', async (req, res) => {
+    const r = await CategoryController.retriveOne(req.params.id);
+    await res.status(r ? 200 : 404).send(r);
+});
+
 router.post('/', async (req, res) => {
     const r = await CategoryController.create(req.body.name);
     console.log(r);

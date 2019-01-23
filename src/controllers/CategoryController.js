@@ -11,6 +11,16 @@ module.exports = {
         }
     },
 
+    async retriveOne(id) {
+        try {
+            const res = await db.category.findByPk(id);
+            return res;
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+    },
+
     async create(name) {
         try {
             const res = await db.category.create({ name });
