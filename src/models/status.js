@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const InterestGroupService = require('../services/InterestGroupService');
 
 module.exports = (sequelize, DataTypes) => {
     const Status = sequelize.define(
@@ -24,7 +25,23 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.UUID,
             },
         },
-        {}
+        {
+            hooks: {
+                afterCreate: async (status, _) => {
+                    const warning = await status.getWarning();
+                    const categoryName = await warning
+                        .getCategory()
+                        .then(it => it.dataValues.name);
+
+                    InterestGroupService.sendUpdate(
+                        categoryName, // title
+                        status.dataValues.description, // comment
+                        warning.dataValues.id, // warningId
+                        status.dataValues.type // status
+                    );
+                },
+            },
+        }
     );
     Status.associate = models => {
         Status.belongsTo(models.warning);
