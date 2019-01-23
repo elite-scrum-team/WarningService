@@ -212,7 +212,7 @@ module.exports = {
         // Fetch subscribed info for instance
         let isSubscribed = false;
         if (userId) {
-            let userInfo = await InterestGroupService.userInfo(userId);
+            let userInfo = await InterestGroupService.userInfo(userId, id);
             console.log(userInfo.status);
             if (userInfo.status === 200) {
                 isSubscribed = (await userInfo.json()).id ? true : false;
