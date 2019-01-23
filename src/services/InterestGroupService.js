@@ -13,7 +13,7 @@ module.exports = {
         return await services.fetch.get(
             'interest_group',
             'warning/userinfo',
-            warningId,
+            { warningId },
             userId
         );
     },
