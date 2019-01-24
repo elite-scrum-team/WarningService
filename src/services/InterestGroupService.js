@@ -4,10 +4,6 @@ console.log(
     `interestGroup-service: ${process.env.INTEREST_GROUP_SERVICE_SERVICE_HOST}`
 );
 
-if (!process.env.INTEREST_GROUP_SERVICE_SERVICE_HOST) {
-    process.env['INTEREST_GROUP_SERVICE_SERVICE_HOST'] = 'localhost:80';
-}
-
 module.exports = {
     async userInfo(userId, warningId) {
         return await services.fetch.get(
