@@ -2,6 +2,8 @@ const express = require('express');
 const MapService = require('../services/MapService');
 const StatisticsController = require('../controllers/StatisticsController');
 
+const Op = require('sequelize').Op;
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
