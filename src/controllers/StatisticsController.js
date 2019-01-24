@@ -8,4 +8,61 @@ module.exports = {
         );
         console.log(result);
     },
+
+    warningDistribution: async (startDate, endDate, dateFormat, whereAddOn) =>
+        db.warning
+            .findAll({
+                attributes: [
+                    [
+                        db.sequelize.fn(
+                            'DATE_FORMAT',
+                            db.sequelize.col('createdAt'),
+                            dateFormat
+                        ),
+                        'date',
+                    ],
+                    [Sequelize.literal('COUNT(*)'), 'count'],
+                ],
+                where: {
+                    createdAt: {
+                        [Op.between]: [startDate, endDate],
+                    },
+                    ...whereAddOn,
+                },
+                group: ['date'],
+            })
+            .then(it => it.map(data => data.dataValues)),
+
+    categoryDistribution: async (startDate, endDate, whereAddOn) =>
+        db.category.findAll().then(data =>
+            Promise.all(
+                data.map(async it => {
+                    let output = { name: it.dataValues.name };
+                    output.warnings = await it.countWarnings({
+                        where: {
+                            createdAt: {
+                                [Op.between]: [startDate, endDate],
+                            },
+                        },
+                        ...whereAddOn,
+                    });
+                    return output;
+                })
+            )
+        ),
+
+    countWarnings: async (startDate, endDate, whereAddOn) =>
+        db.warning
+            .findOne({
+                attributes: [
+                    [db.sequelize.fn('COUNT', db.sequelize.col('id')), 'count'],
+                ],
+                where: {
+                    createdAt: {
+                        [Op.between]: [startDate, endDate],
+                    },
+                    ...whereAddOn,
+                },
+            })
+            .then(it => it.dataValues),
 };
