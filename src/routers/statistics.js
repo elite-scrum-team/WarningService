@@ -114,11 +114,20 @@ router.get('/count', async (req, res) => {
     }
 
     const output = startDate.reduce((acc, val) => {
-        acc[val] = StatisticsController.countWarnings(val, endDate, whereAddOn);
+        acc[val] = val;
         return acc;
     }, {});
 
-    const result = await Promise.all(output);
+    const result = await Promise.all(
+        output.map(
+            async it =>
+                await StatisticsController.countWarnings(
+                    it,
+                    endDate,
+                    whereAddOn
+                )
+        )
+    );
 
     res.send(result);
 });
