@@ -73,7 +73,7 @@ router.get('/distribution', async (req, res) => {
 });
 
 router.get('/count', async (req, res) => {
-    const {
+    let {
         municipality,
         startDate = ['2000-01-01'],
         endDate = new Date(Date.now() + 1 * 24 * 3600 * 1000)
