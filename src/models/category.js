@@ -11,5 +11,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
         },
     });
+    Category.associate = models => {
+        Category.hasMany(models.warning);
+    };
     return Category;
 };
