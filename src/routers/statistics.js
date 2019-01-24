@@ -118,11 +118,11 @@ router.get('/count', async (req, res) => {
             async it =>
                 await {
                     date: it,
-                    count: await StatisticsController.countWarnings(
+                    ...(await StatisticsController.countWarnings(
                         it,
                         endDate,
                         whereAddOn
-                    ),
+                    )),
                 }
         )
     );
