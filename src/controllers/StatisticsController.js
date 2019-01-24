@@ -46,8 +46,8 @@ module.exports = {
                             createdAt: {
                                 [Op.between]: [startDate, endDate],
                             },
+                            ...whereAddOn,
                         },
-                        ...whereAddOn,
                     });
                     return output;
                 })
