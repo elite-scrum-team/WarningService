@@ -82,6 +82,8 @@ router.get('/count', async (req, res) => {
         status,
     } = req.query;
 
+    if (!(startDate instanceof Array)) startDate = [startDate];
+
     let whereAddOn = {};
 
     // Municipality filter
