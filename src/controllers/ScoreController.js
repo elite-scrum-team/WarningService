@@ -24,10 +24,14 @@ module.exports = {
                 )
                 .filter(it => it !== 0);
             let score = 0;
-            for (let type in typesForUser) {
-                if (type == 6) score -= 10;
-                else score += 1;
-            }
+            console.log(typesForUser);
+            typesForUser.map(e => {
+                if (e === 4) {
+                    score -= 10;
+                } else {
+                    score += 1;
+                }
+            });
             return score;
         } catch (err) {
             console.error(err);
