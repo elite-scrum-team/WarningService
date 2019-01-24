@@ -113,19 +113,17 @@ router.get('/count', async (req, res) => {
         whereAddOn.latestStatusType = status;
     }
 
-    const output = startDate.reduce((acc, val) => {
-        acc[val] = val;
-        return acc;
-    }, {});
-
     const result = await Promise.all(
-        output.map(
+        startDate.map(
             async it =>
-                await StatisticsController.countWarnings(
-                    it,
-                    endDate,
-                    whereAddOn
-                )
+                await {
+                    date: it,
+                    count: await StatisticsController.countWarnings(
+                        it,
+                        endDate,
+                        whereAddOn
+                    ),
+                }
         )
     );
 
