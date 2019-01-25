@@ -2,6 +2,8 @@ const express = require('express');
 const MapService = require('../services/MapService');
 const StatisticsController = require('../controllers/StatisticsController');
 
+const Op = require('sequelize').Op;
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -73,7 +75,7 @@ router.get('/distribution', async (req, res) => {
 });
 
 router.get('/count', async (req, res) => {
-    const {
+    let {
         municipality,
         startDate = ['2000-01-01'],
         endDate = new Date(Date.now() + 1 * 24 * 3600 * 1000)
@@ -113,19 +115,17 @@ router.get('/count', async (req, res) => {
         whereAddOn.latestStatusType = status;
     }
 
-    const output = startDate.reduce((acc, val) => {
-        acc[val] = val;
-        return acc;
-    }, {});
-
     const result = await Promise.all(
-        output.map(
+        startDate.map(
             async it =>
-                await StatisticsController.countWarnings(
-                    it,
-                    endDate,
-                    whereAddOn
-                )
+                await {
+                    date: it,
+                    ...(await StatisticsController.countWarnings(
+                        it,
+                        endDate,
+                        whereAddOn
+                    )),
+                }
         )
     );
 

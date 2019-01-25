@@ -24,7 +24,6 @@ module.exports = {
                 )
                 .filter(it => it !== 0);
             let score = 0;
-            console.log(typesForUser);
             typesForUser.map(e => {
                 if (e === 4) {
                     score -= 10;
