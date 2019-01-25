@@ -2,3 +2,5 @@
 .idea
 /.idea
 .DS_STORE
+coverage
+.nyc_output

@@ -4,7 +4,7 @@
     "description": "service for Warnings",
     "main": "server.js",
     "scripts": {
-        "test": "mocha src/test/*.spec.js",
+        "test": "nyc --reporter=html mocha src/test/*.spec.js",
         "start": "node src/server.js",
         "dev": "nodemon src/server.js"
     },
@@ -27,6 +27,7 @@
         "morgan": "^1.9.1",
         "mysql2": "^1.6.4",
         "node-fetch": "^2.3.0",
+        "nyc": "^13.1.0",
         "prettier": "^1.15.3",
         "pretty-quick": "^1.10.0",
         "prom-client": "^11.2.1",

@@ -107,6 +107,7 @@ router.get('/count', async (req, res) => {
             res.status(500).send({
                 error: 'Server could not get warningIds from municipality',
             });
+            return;
         }
     }
 
