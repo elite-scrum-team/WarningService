@@ -10,6 +10,13 @@ console.log(
  */
 
 module.exports = {
+    /**
+     * @function
+     * Function to check if a user is subscribed to a warning
+     *
+     * @param {UUID} userId
+     * @param {UUID} warningId
+     */
     async userInfo(userId, warningId) {
         return await services.fetch.get(
             'interest_group',
@@ -19,6 +26,16 @@ module.exports = {
         );
     },
 
+    /**
+     * @function
+     * Function called by status model and comment model when a new one is added
+     * this results in an email being sent to subscribed users
+     *
+     * @param {string} title
+     * @param {string} comment
+     * @param {UUID} warningId
+     * @param {integer} status
+     */
     async sendUpdate(title, comment, warningId, status = undefined) {
         return await services.fetch.post(
             'interest_group',

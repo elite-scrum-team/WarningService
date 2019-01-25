@@ -8,8 +8,9 @@ const services = require('../util/services');
 module.exports = {
     /**
      * @function
+     * Function that sends an email to the company that is assigned a new contract
      *
-     * @param {}
+     * @param {Object} c Contract instance so the email can contain the necessary info
      */
     email: {
         async contract(c) {
