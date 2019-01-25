@@ -1,9 +1,9 @@
 {
-  "development": {
-    "username": "WarningService",
-    "password": "WCJEzJed4bUhCp9",
-    "database": "WarningService",
-    "host": "35.228.44.201",
-    "dialect": "mysql"
-  }
+    "development": {
+        "username": "anders",
+        "password": "WCJEzJed4bUhCp9",
+        "database": "Warning",
+        "host": "35.228.83.127",
+        "dialect": "mysql"
+    }
 }
