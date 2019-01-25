@@ -1,11 +1,28 @@
+/**
+ * Warning routers
+ * @module routers/warning
+ * @requires express
+ * @requires WarningController
+ * @requires addUserData
+ */
+
 const express = require('express');
-
 const WarningController = require('../controllers/WarningController');
-
 const addUserData = require('../middleware/user');
 
+/**
+ * Express route for warnings
+ * @namespace warningRouter
+ */
 const router = express.Router();
 
+/**
+ * Route for getting a warning
+ * @function
+ * @name GET-Warning
+ * @param {string} path - "/:id"
+ * @param {callback} route - The route
+ */
 router.get('/:id', async (req, res) => {
     const r = await WarningController.retriveOne(
         req.params.id,
@@ -18,6 +35,13 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+/**
+ * Route for updating a warning
+ * @function
+ * @name PUT-UpdateWarning
+ * @param {string} path - "/:id"
+ * @param {callback} route - The route
+ */
 router.put('/:id', async (req, res) => {
     const result = await WarningController.update(req.params.id, req.body);
     if (result) {
@@ -27,6 +51,13 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+/**
+ * Route for deleting a warning
+ * @function
+ * @name DELETE-DeleteWarning
+ * @param {string} path - "/:id"
+ * @param {callback} route - The route
+ */
 router.delete('/:id', async (req, res) => {
     try {
         const result = await WarningController.delete(
@@ -40,6 +71,13 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+/**
+ * Route for creating a warning
+ * @function
+ * @name POST-CreateWarning
+ * @param {string} path - "/"
+ * @param {callback} route - The route
+ */
 router.post('/', async (req, res) => {
     const instanceOrError = await WarningController.create(
         req.body,
@@ -48,6 +86,13 @@ router.post('/', async (req, res) => {
     await res.send(instanceOrError);
 });
 
+/**
+ * Route for creating a warning
+ * @function
+ * @name GET-Warnings
+ * @param {string} path - "/"
+ * @param {callback} route - The route
+ */
 router.get('/', addUserData, async (req, res) => {
     console.log(req.query);
     const result = await WarningController.retrieve(

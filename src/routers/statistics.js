@@ -1,9 +1,21 @@
+/**
+ * Statistics routers
+ * @module routers/statistics
+ * @requires express
+ * @requires StatisticsController
+ * @requires MapService
+ * @requires Sequelize.Op
+ */
+
 const express = require('express');
 const MapService = require('../services/MapService');
 const StatisticsController = require('../controllers/StatisticsController');
-
 const Op = require('sequelize').Op;
 
+/**
+ * Express route for locations
+ * @namespace statisticsRouter
+ */
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -15,6 +27,13 @@ router.get('/', async (req, res) => {
     }
 });
 
+/**
+ * Route for distribution statistics
+ * @function
+ * @name GET-Distribution
+ * @param {string} path - "/distribution"
+ * @param {callback} route - The route
+ */
 router.get('/distribution', async (req, res) => {
     const {
         warning = false,
@@ -45,9 +64,8 @@ router.get('/distribution', async (req, res) => {
             );
             whereAddOn.locationId = { [Op.in]: locationIdsFromMunicipality };
         } else {
-            res.status(500).send({
-                error: 'Server could not get warningIds from municipality',
-            });
+            res.send([]);
+            return;
         }
     }
 
@@ -74,6 +92,13 @@ router.get('/distribution', async (req, res) => {
     res.send(output);
 });
 
+/**
+ * Route for count statistics
+ * @function
+ * @name GET-Count
+ * @param {string} path - "/count"
+ * @param {callback} route - The route
+ */
 router.get('/count', async (req, res) => {
     let {
         municipality,
@@ -104,9 +129,8 @@ router.get('/count', async (req, res) => {
             );
             whereAddOn.locationId = { [Op.in]: locationIdsFromMunicipality };
         } else {
-            res.status(500).send({
-                error: 'Server could not get warningIds from municipality',
-            });
+            res.send([]);
+            return;
         }
     }
 

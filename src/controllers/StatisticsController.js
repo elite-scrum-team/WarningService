@@ -3,15 +3,25 @@ const Op = Sequelize.Op;
 
 const db = require('../models');
 
-module.exports = {
-    async distrobution(from, to) {
-        const result = await db.sequelize.query(
-            'SELECT categories.name, COUNT(*) as count FROM warnings JOIN categories ON categoryId = categories.id WHERE warnings.createdAt > STR_TO_DATE(:from, "%m/%d/%Y") AND warnings.createdAT < STR_TO_DATE(:to, "%m/%d/%Y") GROUP BY categoryId;',
-            { replacements: { from, to }, type: db.Sequelize.QueryTypes.SELECT }
-        );
-        console.log(result);
-    },
+/**
+ * Statistics controller
+ * @module controllers/StatisticsController
+ *
+ * @require sequelize
+ */
 
+module.exports = {
+    /**
+     * @function
+     * Function that queries the count of registered warnings over a period of time and groups dates on the dateFormat parameter
+     *
+     * @param {string} startDat     - Used to determine the date range in which the statistics are valid
+     * @param {string} endDate      - Used to determine the date range in which the statistics are valid
+     * @param {string} dateFormat   - Used to determine what dates should be grouped together f.eks %Y-%m to group the distribution on year-month
+     * @param {Object} whereAddOn   - Used to add where clauses to the statistics query
+     *
+     * @returns { [{date: string, count: integer}] } - Only returns dates and count where count is not 0
+     */
     warningDistribution: async (startDate, endDate, dateFormat, whereAddOn) =>
         db.warning
             .findAll({
@@ -36,6 +46,16 @@ module.exports = {
             })
             .then(it => it.map(data => data.dataValues)),
 
+    /**
+     * @function
+     * Function that queries the count of registered warnings over a period of time for all categories
+     *
+     * @param {string} startdate    - Used to determine the date range in which the statistics are valid
+     * @param {string} endDate      - Used to determine the date range in which the statistics are valid
+     * @param {Object} whereAddOn   - Used to add where clauses to the statistics query
+     *
+     * @returns { [{name: string, count: integer}] } - Will return an object for every category, even if the warning count for that category is 0
+     */
     categoryDistribution: async (startDate, endDate, whereAddOn) =>
         db.category.findAll().then(data =>
             Promise.all(
@@ -54,6 +74,16 @@ module.exports = {
             )
         ),
 
+    /**
+     * @function
+     * Function that counts warnings over a period of time, with optional where clause
+     *
+     * @param {string} startdate    - Used to determine the date range in which the statistics are valid
+     * @param {string} endDate      - Used to determine the date range in which the statistics are valid
+     * @param {Object} whereAddOn   - Used to add where clauses to the statistics query
+     *
+     * @returns { {count: integer} }
+     */
     countWarnings: async (startDate, endDate, whereAddOn) =>
         db.warning
             .findOne({

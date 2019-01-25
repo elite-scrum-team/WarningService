@@ -2,7 +2,23 @@ const db = require('../models');
 
 const NotificationService = require('../services/NotificationService');
 
+/**
+ * Contract Controller
+ * @module controllers/ContractController
+ *
+ * @requires NotificationService
+ */
+
 module.exports = {
+    /**
+     * @function
+     * Function to create a persisted contract instance
+     *
+     * @param { {warningId: UUID, groupId: UUID, comment: string} } contractData
+     * @param { UUID } userId
+     *
+     * @returns { Object } Returns the contract instance data values
+     */
     async create({ warningId, groupId, comment }, userId) {
         try {
             const contract = await db.contract.create({

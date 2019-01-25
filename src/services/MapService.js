@@ -1,5 +1,10 @@
 const services = require('../util/services');
 
+/**
+ * A service made to communicate with notification service
+ * @module services/MapService
+ */
+
 module.exports = {
     location: {
         async create(location) {

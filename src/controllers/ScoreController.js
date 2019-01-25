@@ -1,6 +1,21 @@
 const db = require('../models');
 
+/**
+ * Score Controller
+ * @module controllers/ScoreController
+ */
+
 module.exports = {
+    /**
+     * @function
+     * Calculates a score for a user describing the quality of posts for that user
+     * the score is based on tallying up the latest status for every warning the user
+     * has posted where a statusCode of 4 gives -10 score and every other statusCode gives +1 score
+     *
+     * @param {UUID} userId
+     *
+     * @returns {integer}
+     */
     async getScoreForUser(userId) {
         try {
             const typesForUser = await db.warning

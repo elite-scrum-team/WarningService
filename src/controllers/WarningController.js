@@ -4,12 +4,31 @@ const UserService = require('../services/UserService');
 const InterestGroupService = require('../services/InterestGroupService');
 
 const Op = require('sequelize').Op;
-
 const flatten = require('../util/flatten');
-
 const asyncForEach = require('../util/asyncForEach');
 
+/**
+ * Warning Controller
+ * @module controllers/WarningController
+ *
+ * @requires sequelize
+ * @requires MapService
+ * @requires UserService
+ * @requires InterestGroupService
+ * @requires flatten
+ * @requires asyncForEach
+ */
+
 module.exports = {
+    /**
+     * @function
+     * Function to create a persisted warning instance
+     *
+     * @param { {description: string, location: { lat, lng }, categoryId: UUID} } warningData
+     * @param {UUID} userId
+     *
+     * @returns {Object} returns the data values to the created instance
+     */
     async create({ description, location, categoryId }, userId) {
         const instance = {
             userId,
@@ -40,6 +59,25 @@ module.exports = {
         }
     },
 
+    /**
+     * @function
+     * Function to retrieve lots of warnings based on several filters
+     * filters:
+     *      offset: how many warnings to skip, used for pagination
+     *      limit: how many warnings to return, used for pagination
+     *      excludeStatus: array of statuscodes to exclude in the query
+     *      onlyStatus: array of statuscodes which a status has to have to be included, onlyStatus has precedence over excludeStatus
+     *      useUserId: boolean to include only warnings for a given user
+     *      municipality: UUID include only warnings which are in the given municipality, municipality has precedence over groupId and location
+     *      groupId: UUID include only warnings which belong only to the given group, groupId has precedence over location
+     *      positions: array of location UUIDs, include only warnings which have location id in the given array
+     *      dateSort: allows sorting warnings on date, can only be either 'DESC' or 'ASC'
+     *
+     * @param {Object} filters bunch'o filters for the query, see function description
+     * @param {UUID} userId
+     *
+     * @returns { [Object] } returns an array of warning data values
+     */
     async retrieve(
         {
             offset,
@@ -187,6 +225,15 @@ module.exports = {
         }
     },
 
+    /**
+     * @function
+     * Function to retrieve all the data bound to a single warning including comments, the latest status, category, images, contracts
+     *
+     * @param {UUID} id warningId
+     * @param {UUID} userId
+     *
+     * @returns {Object} returns the warnings data values
+     */
     async retriveOne(id, userId) {
         const instance = (await db.warning.findByPk(id, {
             include: [
@@ -223,6 +270,14 @@ module.exports = {
         return instance;
     },
 
+    /**
+     * @function
+     * Function to get the content associated to a warning, sorted on date, this is used to display all comments, statuses and contracts on the warning details page
+     *
+     * @param {UUID} id warningId
+     *
+     * @returns { [Object] } returns an array of content objects
+     */
     async retrieveContent(id) {
         const instance = await db.warning.findByPk(id, {
             include: [{ all: true }],
@@ -258,6 +313,15 @@ module.exports = {
         return sortedFlatContent;
     },
 
+    /**
+     * @function
+     * Function to update a warning
+     *
+     * @param {UUID} id warningId
+     * @param {Object} values object with warning data values to update
+     *
+     * @returns {Object} returns the data values of the changed warning
+     */
     async update(id, values) {
         try {
             const warning = await db.warning.findByPk(id);
@@ -268,6 +332,15 @@ module.exports = {
         }
     },
 
+    /**
+     * @function
+     * Function to delete a warning
+     *
+     * @param {UUID} id warningId
+     * @param {UUID} userId
+     *
+     * @returns {Object} returns the data values of the changed warning
+     */
     async delete(id, userId) {
         try {
             const res = await db.warning.findByPk(id);

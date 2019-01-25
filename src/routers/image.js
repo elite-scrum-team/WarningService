@@ -1,8 +1,27 @@
+/**
+ * Image routers
+ * @module routers/image
+ * @requires express
+ * @requires ImageController
+ * @requires WarningController
+ */
+
 const ImageController = require('../controllers/ImageController');
 const WarningController = require('../controllers/WarningController');
 
+/**
+ * Express route for locations
+ * @namespace imageRouter
+ */
 const router = require('express').Router();
 
+/**
+ * Route for creating a image
+ * @function
+ * @name POST-CreateImage
+ * @param {string} path - "/"
+ * @param {callback} route - The route
+ */
 router.route('/').post(async (req, res) => {
     // console.log(req.body);
     // Check if user is allowed to add image
